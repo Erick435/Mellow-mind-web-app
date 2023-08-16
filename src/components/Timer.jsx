@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 
 
-const Timer = () => {
+const Timer = ({onPause, onRestStart, onResume}) => {
     const [wholeTime, setWholeTime] = useState(25 * 60);
     const [timeLeft, setTimeLeft] = useState(wholeTime);
     const [isPaused, setIsPaused] = useState(true);
@@ -38,6 +38,7 @@ const Timer = () => {
 
                         if (isMainTimer) {
                             setIsMainTimer(false);
+                            onRestStart();  // Call the onRestStart callback when the rest timer starts
                             const newTime = Math.round(wholeTime * 0.2);
                             return newTime;
                         } else {
@@ -51,7 +52,7 @@ const Timer = () => {
         }
 
         return () => clearInterval(intervalRef.current);
-    }, [isPaused, isStarted, wholeTime, isMainTimer]);
+    }, [isPaused, isStarted, wholeTime, isMainTimer, onRestStart]); // Add onRestStart to the dependency array
 
 
 
@@ -84,9 +85,8 @@ const Timer = () => {
         }
     };
 
-
-
     const togglePause = () => {
+        // console.log("Toggling pause", { isStarted, isPaused });
         if (timerType === 'additional' && isPaused && !isStarted) {
             setTimerType('main');
             setTimeLeft(wholeTime);
@@ -94,9 +94,17 @@ const Timer = () => {
             setIsStarted(true);
             setIsPaused(false);
         } else {
-            setIsPaused((prevPauseState) => !prevPauseState);
+            setIsPaused((prevPauseState) => {
+                if (!prevPauseState) {
+                    onPause(); // Call the onPause callback when pausing the timer
+                } else {
+                    // onResume(); // Call the onResume callback when resuming the timer
+                }
+                return !prevPauseState;
+            });
         }
     };
+    
 
 
     useEffect(() => {
