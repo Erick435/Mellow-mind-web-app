@@ -1,5 +1,6 @@
 import React from "react";
 import SoundButton from "./SoundButton";
+import Timer from "./Timer";
 
 const soundData = [
     //Get music background
@@ -42,6 +43,7 @@ const Soundboard = () => {
         <div className="soundboard-container">
             <div className="soundboard">
                 <h1>Mellow Mind - Lo-Fi Music Soundboard</h1>
+                <Timer />
                 <select value={selectedSound} onChange={handleDropdownChange}>
                     {soundData.slice(0, 3).map((sound) => (
                         <option key={sound.id} value={sound.soundSrc}>
