@@ -5,6 +5,12 @@ const Timer = () => {
     const [timeLeft, setTimeLeft] = useState(wholeTime);
     const [isPaused, setIsPaused] = useState(true);
     const [isStarted, setIsStarted] = useState(false);
+    const [timerType, setTimerType] = useState('main'); // 'main' for main timer, 'additional' for 20% timer
+    const [nextTimer, setNextTimer] = useState('additional'); // can be 'main' or 'additional'
+    const [isMainTimer, setIsMainTimer] = useState(true);  // true for main, false for additional
+
+
+
     const intervalRef = useRef(null);
 
     const progressBarRef = useRef(null);
@@ -19,10 +25,16 @@ const Timer = () => {
             intervalRef.current = setInterval(() => {
                 setTimeLeft((prevTime) => {
                     if (prevTime <= 1) {
-                        setIsPaused(true);
-                        setIsStarted(false);
                         clearInterval(intervalRef.current);
-                        return wholeTime;
+
+                        if (isMainTimer) {
+                            setIsMainTimer(false);
+                            const newTime = Math.round(wholeTime * 0.2);
+                            return newTime;
+                        } else {
+                            setIsMainTimer(true);
+                            return wholeTime;
+                        }
                     }
                     return prevTime - 1;
                 });
@@ -30,14 +42,14 @@ const Timer = () => {
         }
 
         return () => clearInterval(intervalRef.current);
-    }, [isPaused, isStarted, wholeTime]);
+    }, [isPaused, isStarted, wholeTime, isMainTimer]);
+
+
 
     const handleSetterClick = (setterType) => {
-        // console.log("Button clicked:", setterType); // Check which button is clicked
-    // console.log("Is the timer started?", isStarted); // Check the state of the timer
         if (!isStarted) {
             let timeAdjustment;
-    
+
             switch (setterType) {
                 case 'minutes-plus':
                     timeAdjustment = 60;
@@ -54,23 +66,28 @@ const Timer = () => {
                 default:
                     timeAdjustment = 0;
             }
-    
+
             const newTime = Math.max(wholeTime + timeAdjustment, 0);
             setWholeTime(newTime);
-            setTimeLeft(newTime); // Set the time left to the new whole time.
+            setTimeLeft(newTime);
+            setIsMainTimer(true); // reset back to the main timer
         }
     };
-    
+
+
 
     const togglePause = () => {
-        if (!isStarted) {
+        if (timerType === 'additional' && isPaused && !isStarted) {
+            setTimerType('main');
+            setTimeLeft(wholeTime);
+        } else if (!isStarted) {
             setIsStarted(true);
             setIsPaused(false);
         } else {
             setIsPaused((prevPauseState) => !prevPauseState);
-            // window.alert("STOP")
         }
     };
+
 
     useEffect(() => {
         const length = Math.PI * 2 * 100;
@@ -90,6 +107,10 @@ const Timer = () => {
     return (
         <div>
             <div className="setters">
+                <div className={`message ${!isPaused ? "pulsing" : ""}`}>
+                    <b>{isMainTimer ? "Focus" : "Rest"}</b>
+                </div>
+
                 <div className="minutes-set">
                     <button data-setter="minutes-minus" onClick={() => handleSetterClick('minutes-minus')}>-</button>
                     <button data-setter="minutes-plus" onClick={() => handleSetterClick('minutes-plus')}>+</button>

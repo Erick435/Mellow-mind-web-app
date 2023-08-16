@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@keyframes pulsate {
+  0%, 100% { opacity: 0.2; }
+  40%, 60% {opacity: 1}
+}
+
 
 body {
   margin: 0;
@@ -255,5 +260,9 @@ button[data-setter]:hover { opacity: 0.5; }
 
 /* You may need to adjust these values to visually position the setters correctly */
 .setters {
-  top: 26%; /* Adjust as needed */
+  top: 24%; /* Adjust as needed */
+}
+
+.message {
+  animation: pulsate 5s infinite;
 }
