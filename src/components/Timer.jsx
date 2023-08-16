@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import 'font-awesome/css/font-awesome.min.css';
+
 
 const Timer = () => {
     const [wholeTime, setWholeTime] = useState(25 * 60);
@@ -6,7 +8,6 @@ const Timer = () => {
     const [isPaused, setIsPaused] = useState(true);
     const [isStarted, setIsStarted] = useState(false);
     const [timerType, setTimerType] = useState('main'); // 'main' for main timer, 'additional' for 20% timer
-    const [nextTimer, setNextTimer] = useState('additional'); // can be 'main' or 'additional'
     const [isMainTimer, setIsMainTimer] = useState(true);  // true for main, false for additional
 
 
@@ -15,6 +16,14 @@ const Timer = () => {
 
     const progressBarRef = useRef(null);
     const pointerRef = useRef(null);
+
+    const resetTimer = () => {
+        setWholeTime(25 * 60);
+        setTimeLeft(25 * 60);
+        setIsStarted(false);
+        setIsMainTimer(true); // ensure main timer will start next
+    };
+    
 
     useEffect(() => {
         if (!isStarted) return;
@@ -66,7 +75,8 @@ const Timer = () => {
                 default:
                     timeAdjustment = 0;
             }
-
+            
+        console.log(displayTime)
             const newTime = Math.max(wholeTime + timeAdjustment, 0);
             setWholeTime(newTime);
             setTimeLeft(newTime);
@@ -110,7 +120,8 @@ const Timer = () => {
                 <div className={`message ${!isPaused ? "pulsing" : ""}`}>
                     <b>{isMainTimer ? "Focus" : "Rest"}</b>
                 </div>
-
+                {!isStarted && ( 
+                    <>
                 <div className="minutes-set">
                     <button data-setter="minutes-minus" onClick={() => handleSetterClick('minutes-minus')}>-</button>
                     <button data-setter="minutes-plus" onClick={() => handleSetterClick('minutes-plus')}>+</button>
@@ -119,6 +130,8 @@ const Timer = () => {
                     <button data-setter="seconds-minus" onClick={() => handleSetterClick('seconds-minus')}>-</button>
                     <button data-setter="seconds-plus" onClick={() => handleSetterClick('seconds-plus')}>+</button>
                 </div>
+                    </>
+                )}
             </div>
             <div className="circle">
                 <svg width="300" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
@@ -136,6 +149,12 @@ const Timer = () => {
             <div className="controlls">
                 <div className="display-remain-time">{displayTime}</div>
                 <button id="pause" className={isPaused ? 'play' : 'pause'} onClick={togglePause}></button>
+                {isPaused && displayTime !== '25:00' && ( // The button only appears when the timer is paused and not started
+    <button id="reset" className="reset-button" onClick={resetTimer}>
+    <i className="fa fa-refresh"></i>
+</button>
+)}
+
             </div>
         </div>
     );
