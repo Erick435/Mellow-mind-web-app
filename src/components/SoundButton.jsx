@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const SoundButton = ({ soundSrc, label }) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -17,6 +17,29 @@ const SoundButton = ({ soundSrc, label }) => {
         event.stopPropagation();
         audioRef.current.volume = event.target.value;
     };
+
+
+    useEffect(() => {
+    const handleAudioPaused = () => {
+        setIsPlaying(false);
+    };
+
+    const handleAudioResumed = () => {
+        setIsPlaying(true);
+    };
+
+    // Here, audioRef.current is a reference to the <audio> element in your component
+    audioRef.current.addEventListener('audioPaused', handleAudioPaused);
+    audioRef.current.addEventListener('audioResumed', handleAudioResumed);
+
+    // Clean up listeners on component unmount
+    return () => {
+        audioRef.current.removeEventListener('audioPaused', handleAudioPaused);
+        audioRef.current.removeEventListener('audioResumed', handleAudioResumed);
+    };
+}, []);
+
+    
 
     return (
         <div className="sound-button" >
