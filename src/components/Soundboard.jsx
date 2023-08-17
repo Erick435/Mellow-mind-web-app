@@ -1,5 +1,6 @@
 import React from "react";
 import SoundButton from "./SoundButton";
+import Timer from "./Timer";
 
 const soundData = [
     //Get music background
@@ -37,11 +38,40 @@ const Soundboard = () => {
         setSelectedSound(selectedAudio.soundSrc);
     };
 
-
+    const handleAudioPause = () => {
+        const audioElements = document.getElementsByTagName('audio');
+        for (let i = 0; i < audioElements.length; i++) {
+            if (!audioElements[i].paused) {
+                audioElements[i].pause();
+            }
+        }
+        for (let i = 0; i < audioElements.length; i++) {
+            let event = new Event('audioPaused');
+            audioElements[i].dispatchEvent(event);
+        }
+    };
+    
+    // const handleAudioResume = () => {
+    //     const audioElements = document.getElementsByTagName('audio');
+    //     // Convert the HTMLCollection to an actual array
+    //     const audioArray = Array.from(audioElements);
+    //     audioArray.forEach(audio => {
+    //         // audio.play();
+    //         let event = new Event('audioResumed'); 
+    //         audio.dispatchEvent(event);
+    //     });
+    // };
+    
+    
+    
+    
     return (
         <div className="soundboard-container">
             <div className="soundboard">
                 <h1>Mellow Mind - Lo-Fi Music Soundboard</h1>
+                <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} 
+                // onResume={handleAudioResume} 
+                />
                 <select value={selectedSound} onChange={handleDropdownChange}>
                     {soundData.slice(0, 3).map((sound) => (
                         <option key={sound.id} value={sound.soundSrc}>
