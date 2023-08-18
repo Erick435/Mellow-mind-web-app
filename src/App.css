@@ -306,7 +306,7 @@ button[data-setter]:hover { opacity: 0.5; }
   left: 0;
   top: 0;
   height: 100vh;
-  width: 200px;  /* Adjust as needed */
+  width: 300px;  /* Adjust as needed */
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
@@ -344,12 +344,12 @@ button[data-setter]:hover { opacity: 0.5; }
 }
 
 .sidebar-left.hidden {
-  left: -200px;  /* Width of the sidebar */
+  left: -300px;  /* Width of the sidebar */
 }
 
 .sidebar-toggle {
   position: absolute;
-  left: 200px;  /* Width of the sidebar */
+  left: 300px;  /* Width of the sidebar */
   top: 30%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -361,6 +361,7 @@ button[data-setter]:hover { opacity: 0.5; }
   padding: 10px;
   transition: left 0.7s;  /* Add transition for smooth animation */
   border-radius: 0 30px 30px 0;
+  width: 3rem
 }
 
 /* This will move the button along with the sidebar when the sidebar is hidden */
