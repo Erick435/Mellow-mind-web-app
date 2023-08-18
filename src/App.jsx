@@ -3,6 +3,7 @@ import Soundboard from './components/Soundboard';
 import './App.css';
 
 function App() {
+  const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
 
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
 
@@ -14,6 +15,9 @@ function App() {
     // ... more video paths
   ];
 
+  const toggleSidebar = () => {
+    setSidebarVisibility(!isSidebarVisible);
+  };
 
   return (
     // Background Video
@@ -33,8 +37,14 @@ function App() {
       <div className="App" style={{ position: 'relative', zIndex: 0 }}>
         <Soundboard />
 
+        {/* Sidebar Toggle Button */}
+        <button className={`sidebar-toggle ${isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
+          {isSidebarVisible ? '◀' : '▶'}
+        </button>
+
         {/* Video Sidebar */}
-        <div className="sidebar">
+        <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
+          <i className='video-option-head'>Backgrounds<br />-</i>
             {videoOptions.map(video => (
                 <div
                     key={video.path}
@@ -45,10 +55,9 @@ function App() {
                 </div>
             ))}
         </div>
-    </div>
-      </>
+      </div>
+    </>
   );
-
 }
 
 export default App;

@@ -72,7 +72,7 @@ const Soundboard = () => {
                 <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} 
                 // onResume={handleAudioResume} 
                 />
-                <select value={selectedSound} onChange={handleDropdownChange}>
+                <select className="sound-select" value={selectedSound} onChange={handleDropdownChange}>
                     {soundData.slice(0, 3).map((sound) => (
                         <option key={sound.id} value={sound.soundSrc}>
                             {sound.label}
