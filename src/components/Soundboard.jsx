@@ -53,7 +53,7 @@ const Soundboard = () => {
     return (
         <div className="soundboard-container">
             <div className="soundboard">
-                <h1>Mellow Mind - Lo-Fi Music Soundboard</h1>
+                <h1>Mellow Mind</h1>
                 
                 {/* Soundboard Content: Timer, Selected Songs, Sound Buttons */}
                 <div className="soundboard-content">
