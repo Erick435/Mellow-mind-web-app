@@ -8,7 +8,7 @@ const soundData = [
     { id: 2, soundSrc: '/Next-door.mp3', label: "Jam Session Next Door" },
     { id: 3, soundSrc: '/Jazz.mp3', label: "Jazz" },
     //Get Background ambience
-    { id: 4, soundSrc: '/forest.mp3', label: "In The Forest" },
+    { id: 4, soundSrc: '/forest.mp3', label: "Forest" },
     { id: 5, soundSrc: '/walking-on-water.mp3', label: "Beach" },
     { id: 6, soundSrc: '/cafe.mp3', label: "Cafe" },
 
@@ -33,11 +33,6 @@ const Soundboard = () => {
         }
     };
 
-    const handleDropdownChange = (event) => {
-        const selectedAudio = soundData.find(sound => sound.soundSrc === event.target.value);
-        setSelectedSound(selectedAudio.soundSrc);
-    };
-
     const handleAudioPause = () => {
         const audioElements = document.getElementsByTagName('audio');
         for (let i = 0; i < audioElements.length; i++) {
@@ -51,16 +46,6 @@ const Soundboard = () => {
         }
     };
     
-    // const handleAudioResume = () => {
-    //     const audioElements = document.getElementsByTagName('audio');
-    //     // Convert the HTMLCollection to an actual array
-    //     const audioArray = Array.from(audioElements);
-    //     audioArray.forEach(audio => {
-    //         // audio.play();
-    //         let event = new Event('audioResumed'); 
-    //         audio.dispatchEvent(event);
-    //     });
-    // };
     
     
     
@@ -69,22 +54,47 @@ const Soundboard = () => {
         <div className="soundboard-container">
             <div className="soundboard">
                 <h1>Mellow Mind - Lo-Fi Music Soundboard</h1>
-                <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} 
-                // onResume={handleAudioResume} 
-                />
-                <select value={selectedSound} onChange={handleDropdownChange}>
-                    {soundData.slice(0, 3).map((sound) => (
-                        <option key={sound.id} value={sound.soundSrc}>
-                            {sound.label}
-                        </option>
-                    ))}
-                </select>
-                <div className="sound-buttons">
-                    <SoundButton soundSrc={selectedSound} label="Selected Sound" />
-                    {soundData.slice(3).map((sound) => (
-                        <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} />
-                    ))}
+                
+                {/* Soundboard Content: Timer, Selected Songs, Sound Buttons */}
+                <div className="soundboard-content">
+
+                    {/* Timer Section */}
+                    <div className="timer-section">
+                        <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} />
+                    </div>
+
+                    {/* Selected Songs Section */}
+                    <div className="selected-songs-section">
+                        <div className="selected-songs">
+                            {soundData.slice(0, 3).map((sound) => (
+                                <a
+                                    key={sound.id}
+                                    href="#"
+                                    className={selectedSound === sound.soundSrc ? 'active' : ''}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setSelectedSound(sound.soundSrc);
+                                    }}
+                                >
+                                    {sound.label}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Sound Buttons Section */}
+                    <div className="sound-buttons-section">
+                        <div className="sound-buttons">
+                            <SoundButton soundSrc={selectedSound} label="Selected Sound" />
+                            {soundData.slice(3).map((sound) => (
+                                <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} />
+                            ))}
+                        </div>
+                    </div>
+
                 </div>
+
+                {/* Master Pause Button */}
                 <button className="master-pause" onClick={handleMasterPause}>
                     Pause All
                 </button>
@@ -92,5 +102,6 @@ const Soundboard = () => {
         </div>
     );
 };
+
 
 export default Soundboard;
