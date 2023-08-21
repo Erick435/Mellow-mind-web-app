@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 .App {
   position: relative;
   z-index: 1;
 }
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
 @keyframes pulsate {
   0%, 100% { opacity: 0.2; }
   40%, 60% {opacity: 1}
@@ -69,12 +80,13 @@ h1{
 }
 
 
-/* Sound Board */
+/* ================ Sound Board =================== */
 .soundboard-container {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  color:white;
 }
 
 .soundboard {
@@ -82,13 +94,173 @@ h1{
   background-color:rgba(0, 0, 0, 0.4);
   margin: 5rem;
   padding: 10px;
-  border: 2px solid #e39157; /* Fall theme color - you can choose your desired color */
+  border: 2px solid #ffffff; /* Fall theme color - you can choose your desired color */
   border-radius: 10px;
   /* background-color: transparent; */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
 }
+
+.soundboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; 
+  color:white;
+}
+
+.timer-section, .selected-songs-section, .sound-buttons-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+
+/* ---------------- SELECTED SONGS BUTTON CSS---------- */
+
+a {
+  position: relative;
+  display: inline-block;
+  padding: 30px 35px;
+  margin: 40px 0;
+  color: #03e9f4;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  letter-spacing: 2px;
+  overflow: hidden;
+  margin-right: 50px;
+
+}
+
+a:hover {
+  background: #03e9f4;
+  color: #050801;
+  box-shadow: 0 0 5px #03e9f4,
+      0 0 25px #03e9f4,
+      0 0 50px #03e9f4,
+      0 0 200px #03e9f4;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+}
+
+a:nth-child(1) {
+  filter: hue-rotate(270deg);
+}
+
+a:nth-child(2) {
+  filter: hue-rotate(110deg);
+}
+
+a span {
+  position: absolute;
+  display: block;
+}
+
+a span:nth-child(1) {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #03e9f4);
+  animation: animate1 1s linear infinite;
+}
+
+@keyframes animate1 {
+  0% {
+      left: -100%;
+  }
+
+  50%,
+  100% {
+      left: 100%;
+  }
+}
+
+a span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #03e9f4);
+  animation: animate2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+@keyframes animate2 {
+  0% {
+      top: -100%;
+  }
+
+  50%,
+  100% {
+      top: 100%;
+  }
+}
+
+a span:nth-child(3) {
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #03e9f4);
+  animation: animate3 1s linear infinite;
+  animation-delay: 0.50s;
+}
+
+@keyframes animate3 {
+  0% {
+      right: -100%;
+  }
+
+  50%,
+  100% {
+      right: 100%;
+  }
+}
+
+
+a span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #03e9f4);
+  animation: animate4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes animate4 {
+  0% {
+      bottom: -100%;
+  }
+
+  50%,
+  100% {
+      bottom: 100%;
+  }
+}
+
+.selected-songs a.active {
+  background: #03e9f4;
+  color: #050801;
+  box-shadow: 0 0 5px #03e9f4,
+      0 0 25px #03e9f4,
+      0 0 50px #03e9f4,
+      0 0 200px #03e9f4;
+  /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.selected-songs {
+  display: flex;
+  justify-content: space-between;
+  /* margin: 20px 0; Adjust spacing as needed */
+}
+
+
+/* ---------------------------------------------------- */
 
 
 .sound-button {
@@ -138,16 +310,11 @@ h1{
   background-color: #d47b3e;
 }
 
-/* ... your existing styles ... */
-
 input[type="range"] {
   /* Set the track color to the fall-themed color */
   --track-color: #e39157;
   /* Set the thumb color to a slightly darker shade */
   --thumb-color: #d47b3e;
-
-  /* Remove default styling */
-  /* -webkit-appearance: none; */
   width: 100%;
   background: transparent;
 }
@@ -187,18 +354,21 @@ button[data-setter] {
   border: none;
   /* font-family: Aquatico; */
   font-weight: 300;
-  font-size: 18px;
-  width: 25px;
-  height: 30px;
+  font-size: 35px;
+  width: 40px;
+  height: 40px;
   color: #e39157;
   cursor: pointer;
   pointer-events: auto;
+  align-items: center;
 }
 button[data-setter]:hover { opacity: 0.5; }
+
 .setters {
   position: absolute;
   left: 85px;
   top: 75px;
+  top: 13%;
 }
 .minutes-set {
   float: left;
@@ -206,18 +376,25 @@ button[data-setter]:hover { opacity: 0.5; }
 }
 .seconds-set { float: right; }
 
-/* .controlls {
+.controlls {
   position: absolute;
-  left: 75px;
-  top: 105px;
   text-align: center;
-} */
+  top: 20%; 
+  transform: translateX(-50%) translateY(-50%); 
+}
+
 .display-remain-time {
   font-weight: 100;
   font-family: 'Roboto';
   font-size: 65px;
   color: #e39157;
+  background: none;
+  border: none;
+  outline: none;
+  text-align: center;
+  width: 150px; /* Adjust as needed */
 }
+
 #pause {
   outline: none;
   background: transparent;
@@ -283,18 +460,10 @@ button[data-setter]:hover { opacity: 0.5; }
   transform: translateX(-50%); /* Centers the elements horizontally with respect to the circle */
 }
 
-.controlls {
-  top: 36%; /* Center vertically */
-  transform: translateX(-50%) translateY(-50%); /* Center both horizontally and vertically */
-}
-
-/* You may need to adjust these values to visually position the setters correctly */
-.setters {
-  top: 24%; /* Adjust as needed */
-}
-
 .message {
   animation: pulsate 5s infinite;
+  margin: 5px;
+  font-size: larger;
 }
 
 /* ... your existing styles ... */
@@ -354,7 +523,7 @@ button[data-setter]:hover { opacity: 0.5; }
   color: lightgray;
   cursor: pointer;
   margin-bottom: 10px;
-  font-size: 18px;  /* Increase font size */
+  font-size: 20px;  /* Increase font size */
 }
 
 .video-option:hover {
