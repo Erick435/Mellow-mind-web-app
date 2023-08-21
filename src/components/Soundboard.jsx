@@ -68,7 +68,7 @@ const Soundboard = () => {
     return (
         <div className="soundboard-container">
             <div className="soundboard">
-                <h1>Mellow Mind - Lo-Fi Music Soundboard</h1>
+                <h1>Mellow Mind</h1>
                 <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} 
                 // onResume={handleAudioResume} 
                 />
