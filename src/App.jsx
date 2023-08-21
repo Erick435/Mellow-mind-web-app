@@ -12,6 +12,7 @@ function App() {
     { label: "Sunset", path: "/sunset.mp4" },
     { label: "Resting Fire", path: "/resting-fire.mp4" },
     { label: "Nightsky", path: "/nightsky.mp4" },
+    
     // ... more video paths
   ];
 
@@ -37,10 +38,11 @@ function App() {
       <div className="App" style={{ position: 'relative', zIndex: 0 }}>
         <Soundboard />
 
-        {/* Sidebar Toggle Button */}
-        <button className={`sidebar-toggle ${isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
+ {/* Sidebar Toggle Button */}
+<button className={`sidebar-toggle ${isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
           {isSidebarVisible ? '◀' : '▶'}
         </button>
+
 
         {/* Video Sidebar */}
         <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
@@ -55,9 +57,10 @@ function App() {
                 </div>
             ))}
         </div>
-      </div>
-    </>
+    </div>
+      </>
   );
+
 }
 
 export default App;
