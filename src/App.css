@@ -503,7 +503,7 @@ button[data-setter]:hover { opacity: 0.5; }
   position: absolute;
   left: 0;
   top: 0;
-  height: 100vh;
+  height: 100%;
   z-index: 3;
   width: 300px;  /* Adjust as needed */
   background-color: rgba(0, 0, 0, 0.7);
