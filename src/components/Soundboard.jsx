@@ -96,7 +96,8 @@ const Soundboard = () => {
 
                 {/* Master Pause Button */}
                 <button className="master-pause" onClick={handleMasterPause}>
-                    Pause All
+                <b>| |    </b>
+                
                 </button>
             </div>
         </div>
