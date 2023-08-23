@@ -1,6 +1,7 @@
 import React from "react";
 import SoundButton from "./SoundButton";
 import Timer from "./Timer";
+import LiveTimer from "./LiveTimer";
 
 const soundData = [
     //Get music background
@@ -53,7 +54,9 @@ const Soundboard = () => {
     return (
         <div className="soundboard-container">
             <div className="soundboard">
-                <h1>Mellow Mind</h1>
+                    <div className="clock-section">
+                        <LiveTimer />
+                    </div>
                 
                 {/* Soundboard Content: Timer, Selected Songs, Sound Buttons */}
                 <div className="soundboard-content">
@@ -62,7 +65,6 @@ const Soundboard = () => {
                     <div className="timer-section">
                         <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} />
                     </div>
-
                     {/* Selected Songs Section */}
                     <div className="selected-songs-section">
                         <div className="selected-songs">
