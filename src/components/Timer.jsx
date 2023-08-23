@@ -53,8 +53,8 @@ const Timer = ({ onPause, onRestStart, onResume }) => {
         }
 
         const newDisplayTime = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
-    setDisplayTime(newDisplayTime);
-          
+        setDisplayTime(newDisplayTime);
+
         return () => clearInterval(intervalRef.current);
     }, [isPaused, isStarted, wholeTime, isMainTimer, onRestStart, timeLeft]); // Add onRestStart to the dependency array
 
@@ -127,23 +127,23 @@ const Timer = ({ onPause, onRestStart, onResume }) => {
     // Functions allow the timer display to be changed manually instead of buttons
     const handleTimeInputChange = (e) => {
         let value = e.target.value;
-    
+
         // Strip out non-numeric characters
         value = value.replace(/\D/g, '');
-    
+
         // Ensure the value is not too long
         if (value.length <= 4) {
             // Add leading zeros if needed
             while (value.length < 4) value = '0' + value;
-    
+
             // Insert the colon to make it MM:SS format
             value = value.slice(0, 2) + ':' + value.slice(2);
-    
+
             setDisplayTime(value);
         }
     };
-    
-    
+
+
 
     const handleTimeInputBlur = () => {
         // Convert the display time to seconds and update the timer
@@ -190,13 +190,13 @@ const Timer = ({ onPause, onRestStart, onResume }) => {
             </div>
             <div className="controlls">
                 <input
-    type="text"
-    value={displayTime}
-    className="display-remain-time"
-    onChange={handleTimeInputChange}
-    onBlur={handleTimeInputBlur}
-    onClick={(e) => e.target.select()}  // Add this line
-/>
+                    type="text"
+                    value={displayTime}
+                    className="display-remain-time"
+                    onChange={handleTimeInputChange}
+                    onBlur={handleTimeInputBlur}
+                    onClick={(e) => e.target.select()}  // Add this line
+                />
 
                 <button id="pause" className={isPaused ? 'play' : 'pause'} onClick={togglePause}></button>
                 {isPaused && displayTime !== '25:00' && ( // The button only appears when the timer is paused and not started
