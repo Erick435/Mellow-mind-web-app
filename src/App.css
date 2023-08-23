@@ -91,6 +91,7 @@ h1{
 
 .soundboard {
   text-align: center;
+  position: relative;
   background-color:rgba(0, 0, 0, 0.4);
   margin: 5rem;
   padding: 10px;
@@ -576,4 +577,40 @@ button[data-setter]:hover { opacity: 0.5; }
 /* This will move the button along with the sidebar when the sidebar is hidden */
 .sidebar-toggle.hidden {
   left: 0px;
+}
+
+.settings-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; 
+  max-width: 500px; 
+  background-color: #fff; 
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001; 
+}
+
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 1000; 
+
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
