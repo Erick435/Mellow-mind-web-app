@@ -91,6 +91,7 @@ h1{
 
 .soundboard {
   text-align: center;
+  position: relative;
   background-color:rgba(0, 0, 0, 0.4);
   margin: 5rem;
   padding: 10px;
@@ -139,6 +140,7 @@ a {
 a:hover {
   background: #03e9f4;
   color: #050801;
+  /* border-radius: 30%; */
   box-shadow: 0 0 5px #03e9f4,
       0 0 25px #03e9f4,
       0 0 50px #03e9f4,
@@ -246,6 +248,7 @@ a span:nth-child(4) {
 .selected-songs a.active {
   background: #03e9f4;
   color: #050801;
+  border-radius: 30%;
   box-shadow: 0 0 5px #03e9f4,
       0 0 25px #03e9f4,
       0 0 50px #03e9f4,
@@ -297,10 +300,11 @@ a span:nth-child(4) {
 
 .master-pause {
   margin-top: 20px;
-  border-radius: 10%;
+  border-radius: 100%;
   border: none;
   background-color: #e39157;
-  width: 100px;
+  font-weight: 900;
+  width: 50px;
   height: 50px;
   color: white;
   cursor: pointer;
@@ -364,22 +368,27 @@ button[data-setter] {
 }
 button[data-setter]:hover { opacity: 0.5; }
 
+.setter-button{
+  display: inline;
+}
+
 .setters {
   position: absolute;
   left: 85px;
   top: 75px;
-  top: 13%;
+  top: 15%;
 }
 .minutes-set {
   float: left;
   margin-right: 28px;
+  display:inline
 }
 .seconds-set { float: right; }
 
 .controlls {
   position: absolute;
   text-align: center;
-  top: 20%; 
+  top: 22%; 
   transform: translateX(-50%) translateY(-50%); 
 }
 
@@ -568,4 +577,40 @@ button[data-setter]:hover { opacity: 0.5; }
 /* This will move the button along with the sidebar when the sidebar is hidden */
 .sidebar-toggle.hidden {
   left: 0px;
+}
+
+.settings-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; 
+  max-width: 500px; 
+  background-color: #fff; 
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001; 
+}
+
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 1000; 
+
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
 }

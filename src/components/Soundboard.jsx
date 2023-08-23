@@ -1,6 +1,8 @@
 import React from "react";
 import SoundButton from "./SoundButton";
 import Timer from "./Timer";
+import Modal from 'react-modal'
+import { FaGear } from 'react-icons/fa6'
 
 const soundData = [
     //Get music background
@@ -21,9 +23,15 @@ const soundData = [
     // Add more sound data objects as needed
 ];
 
+Modal.setAppElement('#root');
+
 const Soundboard = () => {
     const [selectedSound, setSelectedSound] = React.useState(soundData[0].soundSrc); // Default to the first sound
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [focusTime, setFocusTime] = React.useState(25); // default 25 mins
+    const [breakTime, setBreakTime] = React.useState(5); 
 
+    
     const handleMasterPause = () => {
         const audioElements = document.getElementsByTagName('audio');
         for (let i = 0; i < audioElements.length; i++) {
@@ -45,22 +53,65 @@ const Soundboard = () => {
             audioElements[i].dispatchEvent(event);
         }
     };
-    
-    
-    
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
     
     
     return (
         <div className="soundboard-container">
             <div className="soundboard">
                 <h1>Mellow Mind</h1>
-                
+                <button onClick={openModal} className="settings-btn"><FaGear color='white' size='3em'/></button>
+
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Settings Modal"
+                    className="settings-modal"
+                    overlayClassName="settings-modal-overlay"
+                >
+                    <h2>Settings</h2>
+
+                    <div className="settings-form">
+                        <label>
+                            Focus (mins):
+                            <input 
+                                type="number" 
+                                value={focusTime} 
+                                onChange={e => setFocusTime(Math.max(0, e.target.value))} // Ensure non-negative values
+                            />
+                        </label>
+                        <label>
+                            Break (mins):
+                            <input 
+                                type="number" 
+                                value={breakTime} 
+                                onChange={e => setBreakTime(Math.max(0, e.target.value))} // Ensure non-negative values
+                            />
+                        </label>
+                    </div>
+                    
+
+                    <button onClick={closeModal}>Close</button>
+                </Modal>
+
                 {/* Soundboard Content: Timer, Selected Songs, Sound Buttons */}
                 <div className="soundboard-content">
 
                     {/* Timer Section */}
                     <div className="timer-section">
-                        <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} />
+                        <Timer 
+                            onPause={handleAudioPause} 
+                            onRestStart={handleAudioPause} 
+                            focusTime={focusTime}
+                            breakTime={breakTime}
+                        />
                     </div>
 
                     {/* Selected Songs Section */}
@@ -96,7 +147,8 @@ const Soundboard = () => {
 
                 {/* Master Pause Button */}
                 <button className="master-pause" onClick={handleMasterPause}>
-                    Pause All
+                <b>| |    </b>
+                
                 </button>
             </div>
         </div>
