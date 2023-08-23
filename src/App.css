@@ -139,7 +139,6 @@ a {
 a:hover {
   background: #03e9f4;
   color: #050801;
-  /* border-radius: 30%; */
   box-shadow: 0 0 5px #03e9f4,
       0 0 25px #03e9f4,
       0 0 50px #03e9f4,
@@ -247,7 +246,6 @@ a span:nth-child(4) {
 .selected-songs a.active {
   background: #03e9f4;
   color: #050801;
-  border-radius: 30%;
   box-shadow: 0 0 5px #03e9f4,
       0 0 25px #03e9f4,
       0 0 50px #03e9f4,
@@ -299,11 +297,10 @@ a span:nth-child(4) {
 
 .master-pause {
   margin-top: 20px;
-  border-radius: 100%;
+  border-radius: 10%;
   border: none;
   background-color: #e39157;
-  font-weight: 900;
-  width: 50px;
+  width: 100px;
   height: 50px;
   color: white;
   cursor: pointer;
@@ -367,27 +364,22 @@ button[data-setter] {
 }
 button[data-setter]:hover { opacity: 0.5; }
 
-.setter-button{
-  display: inline;
-}
-
 .setters {
   position: absolute;
   left: 85px;
   top: 75px;
-  top: 15%;
+  top: 13%;
 }
 .minutes-set {
   float: left;
   margin-right: 28px;
-  display:inline
 }
 .seconds-set { float: right; }
 
 .controlls {
   position: absolute;
   text-align: center;
-  top: 22%; 
+  top: 20%; 
   transform: translateX(-50%) translateY(-50%); 
 }
 
@@ -508,7 +500,7 @@ button[data-setter]:hover { opacity: 0.5; }
 /* App.css */
 
 .sidebar-left {
-  position: absolute;
+  position: fixed; /* Change from absolute to fixed */
   left: 0;
   top: 0;
   height: 100%;
@@ -522,8 +514,8 @@ button[data-setter]:hover { opacity: 0.5; }
   box-sizing: border-box;
   overflow-y: auto;  /* For scrolling if the list is long */
   transition: left 0.7s;  /* Add transition for smooth animation */
-
 }
+
 
 /* BACKGROUND CHANGE FOR VIDEOS */
 
@@ -555,8 +547,8 @@ button[data-setter]:hover { opacity: 0.5; }
 }
 
 .sidebar-toggle {
-  position: absolute;
-  left: 300px;  /* Width of the sidebar */
+  position: fixed; /* Change from absolute to fixed */
+  left: 300px; /* Adjust left position */
   top: 30%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -569,9 +561,9 @@ button[data-setter]:hover { opacity: 0.5; }
   transition: left 0.7s;  /* Add transition for smooth animation */
   border-radius: 0 30px 30px 0;
   width: 3rem;
-  
   z-index: 3;
 }
+
 
 /* This will move the button along with the sidebar when the sidebar is hidden */
 .sidebar-toggle.hidden {
