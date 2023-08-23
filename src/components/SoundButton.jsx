@@ -20,24 +20,27 @@ const SoundButton = ({ soundSrc, label }) => {
 
 
     useEffect(() => {
-    const handleAudioPaused = () => {
-        setIsPlaying(false);
-    };
-
-    const handleAudioResumed = () => {
-        setIsPlaying(true);
-    };
-
-    // Here, audioRef.current is a reference to the <audio> element in your component
-    audioRef.current.addEventListener('audioPaused', handleAudioPaused);
-    audioRef.current.addEventListener('audioResumed', handleAudioResumed);
-
-    // Clean up listeners on component unmount
-    return () => {
-        audioRef.current.removeEventListener('audioPaused', handleAudioPaused);
-        audioRef.current.removeEventListener('audioResumed', handleAudioResumed);
-    };
-}, []);
+        const handleAudioPaused = () => {
+            setIsPlaying(false);
+        };
+    
+        const handleAudioResumed = () => {
+            setIsPlaying(true);
+        };
+    
+        audioRef.current.addEventListener('audioPaused', handleAudioPaused);
+        audioRef.current.addEventListener('audioResumed', handleAudioResumed);
+    
+        // Cleanup function
+        return () => {
+            // Check if audioRef.current exists before removing event listeners
+            if (audioRef.current) {
+                audioRef.current.removeEventListener('audioPaused', handleAudioPaused);
+                audioRef.current.removeEventListener('audioResumed', handleAudioResumed);
+            }
+        };
+    }, []);
+    
 
     
 
