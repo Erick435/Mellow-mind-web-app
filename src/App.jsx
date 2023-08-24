@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Soundboard from './components/Soundboard';
+import PaymentPage
+ from './components/PaymentPage';
 import SignIn from './components/googleSignin/SignIn'; //this is correct even if it's highlighting red
 import { auth } from './components/googleSignin/config'
 import { signOut } from '@firebase/auth';
+import { Link, Route, Routes } from 'react-router-dom';
+
 import './App.css';
 
 function App() {
@@ -124,6 +128,10 @@ function App() {
           )}
         </div>
       </div>
+      <Routes>
+        <Route path="/payment" element={<PaymentPage userId={user.uid}/>} />
+        {/* Other routes */}
+      </Routes>
     </>
   );
 

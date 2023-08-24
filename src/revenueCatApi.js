@@ -3,13 +3,13 @@ import axios from 'axios';
 
 const REVENUECAT_API_BASE_URL = "https://api.revenuecat.com/v1";
 
-export async function getOrCreateSubscriber(appUserId) {
+export async function getOrCreateSubscriber(apiKey, appUserId) {
   const url = `${REVENUECAT_API_BASE_URL}/subscribers/${appUserId}`;
   
   const headers = {
     accept: 'application/json',
     // 'X-Platform': 'ios', // This header seems to be specific to iOS, adapt if needed
-    authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+    authorization: `Bearer ${apiKey}`,
   };
 
   try {

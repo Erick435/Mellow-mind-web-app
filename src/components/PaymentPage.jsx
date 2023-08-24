@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { getOrCreateSubscriber } from "../revenueCatApi"
 
-function PaymentPage() {
+function PaymentPage({userId}) {
   const [subscriberInfo, setSubscriberInfo] = useState({});
   const API_KEY = process.env.REACT_APP_CAT_API_KEY
-  const appUserId = "user-1456"; // Replace with the actual app user ID
+  const appUserId = userId; // Replace with the actual app user ID
 
   useEffect(() => {
     getOrCreateSubscriber(API_KEY, appUserId)
