@@ -41,7 +41,6 @@ const SoundButton = ({ soundSrc, label }) => {
         };
     }, []);
     
-
     
 
     return (
