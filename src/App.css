@@ -18,7 +18,7 @@
   0%, 100% { opacity: 0.2; }
   40%, 60% {opacity: 1}
 }
-
+/* FONTS */
 @font-face {
   font-family: 'Aquatico';
   src: local('Aquatico'), url('./fonts/Aquatico-Regular.otf') format('opentype');
@@ -31,7 +31,17 @@
   font-family: 'MoonBold';
   src: local('MoonBold'), url('./fonts/Moon2.0-Bold.otf') format('opentype');
 }
+@font-face {
+  font-family: 'RadioLandSlim';
+  src: local('RadioLandSlim'), url('./fonts/RADIOLANDSLIM.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RadioLand';
+  src: local('RadioLand'), url('./fonts/RADIOLAND.TTF') format('truetype');
+}
 
+
+/* STYLE */
 body {
   margin: 0;
   height: 100%;
@@ -117,6 +127,23 @@ h1{
   width: 100%;
 }
 
+/* live clock */
+.clock-section{
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.live-timer{
+  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0, 0.4));
+  width: 8rem;
+  border-radius: 20%;
+  border: 2px solid #d47b3e;
+  align-self: center;
+  margin: 0 auto
+}
+.digital-clock{
+  font-family: RadioLand;
+  font-size: 2rem;
+}
 
 
 

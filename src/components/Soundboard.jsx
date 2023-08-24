@@ -1,6 +1,7 @@
 import React from "react";
 import SoundButton from "./SoundButton";
 import Timer from "./Timer";
+import LiveTimer from "./LiveTimer";
 import Modal from 'react-modal'
 import { FaGear } from 'react-icons/fa6'
 
@@ -66,7 +67,9 @@ const Soundboard = () => {
     return (
         <div className="soundboard-container">
             <div className="soundboard">
-                <h1>Mellow Mind</h1>
+                    <div className="clock-section">
+                        <LiveTimer />
+                    </div>
                 <button onClick={openModal} className="settings-btn"><FaGear color='white' size='3em'/></button>
 
                 <Modal
@@ -100,7 +103,6 @@ const Soundboard = () => {
 
                     <button onClick={closeModal}>Close</button>
                 </Modal>
-
                 {/* Soundboard Content: Timer, Selected Songs, Sound Buttons */}
                 <div className="soundboard-content">
 
@@ -113,7 +115,6 @@ const Soundboard = () => {
                             breakTime={breakTime}
                         />
                     </div>
-
                     {/* Selected Songs Section */}
                     <div className="selected-songs-section">
                         <div className="selected-songs">
