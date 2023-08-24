@@ -4,6 +4,7 @@ import SignIn from './components/googleSignin/SignIn'; //this is correct even if
 import { auth } from './components/googleSignin/config'
 import { signOut } from '@firebase/auth';
 import './App.css';
+import TodoList from './components/todolist';
 
 function App() {
   //setting up login/registration (firebase)
@@ -12,6 +13,8 @@ function App() {
 
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
+  const [selectedTask, setSelectedTask] = useState(null);
+
 
   const videoOptions = [
     { label: "Moonlight", path: "/moonlight.mp4" },
@@ -92,7 +95,15 @@ function App() {
         ></video>
       </div>
 
+      {/* New code to display the selected task */}
+      {selectedTask !== null && (
+        <div className="selected-task-display" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
+          {selectedTask}
+        </div>
+      )}
+
       <div className="App" style={{ position: 'relative', zIndex: 0 }}>
+        {/* <TodoList /> */}
         <Soundboard />
 
         {/* Sidebar Toggle Button */}
@@ -103,6 +114,7 @@ function App() {
 
         {/* Video Sidebar */}
         <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
+        <TodoList onTaskSelect={setSelectedTask} />
           <div>
             <i className='video-option-head'>Backgrounds<br />-</i>
             {videoOptions.map(video => (
@@ -116,10 +128,10 @@ function App() {
             ))}
           </div>
           {user && (
-            <div>
-              <button onClick={handleLogout} style={{ marginTop: '15px' }}>
+            <div className="logout-link-container" >
+              <div className="logout-link" onClick={handleLogout}>
                 Logout
-              </button>
+              </div>
             </div>
           )}
         </div>
