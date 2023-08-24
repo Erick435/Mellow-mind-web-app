@@ -1,49 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
 .App {
   position: relative;
   z-index: 1;
 }
-@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
 
 @keyframes pulsate {
-  0%, 100% { opacity: 0.2; }
-  40%, 60% {opacity: 1}
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  40%,
+  60% {
+    opacity: 1;
+  }
+}
+/* FONTS */
+@font-face {
+  font-family: "Aquatico";
+  src: local("Aquatico"), url("./fonts/Aquatico-Regular.otf") format("opentype");
+}
+@font-face {
+  font-family: "MoonReg";
+  src: local("MoonReg"), url("./fonts/Moon2.0-Regular.otf") format("opentype");
+}
+@font-face {
+  font-family: "MoonBold";
+  src: local("MoonBold"), url("./fonts/Moon2.0-Bold.otf") format("opentype");
+}
+@font-face {
+  font-family: 'RadioLandSlim';
+  src: local('RadioLandSlim'), url('./fonts/RADIOLANDSLIM.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RadioLand';
+  src: local('RadioLand'), url('./fonts/RADIOLAND.TTF') format('truetype');
 }
 
-@font-face {
-  font-family: 'Aquatico';
-  src: local('Aquatico'), url('./fonts/Aquatico-Regular.otf') format('opentype');
-}
-@font-face {
-  font-family: 'MoonReg';
-  src: local('MoonReg'), url('./fonts/Moon2.0-Regular.otf') format('opentype');
-}
-@font-face {
-  font-family: 'MoonBold';
-  src: local('MoonBold'), url('./fonts/Moon2.0-Bold.otf') format('opentype');
-}
 
+/* STYLE */
 body {
   margin: 0;
   height: 100%;
-  background: radial-gradient(#E66465, #9198E5);
+  background: radial-gradient(#e66465, #9198e5);
 }
 
-*{
+* {
   font-family: MoonReg;
   letter-spacing: 0.01rem;
 }
 
-h1{
+h1 {
   font-family: MoonBold;
   font-size: 2.4rem;
   letter-spacing: 0;
@@ -66,7 +81,6 @@ h1{
   height: 100%;
 }
 
-
 /* Navbar */
 .navbar {
   background-color: transparent;
@@ -79,18 +93,18 @@ h1{
   cursor: pointer;
 }
 
-
 /* ================ Sound Board =================== */
 .soundboard-container {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  color:white;
+  color: white;
 }
 
 .soundboard {
   text-align: center;
+  position: relative;
   background-color:rgba(0, 0, 0, 0.4);
   margin: 5rem;
   padding: 10px;
@@ -105,11 +119,13 @@ h1{
 .soundboard-content {
   display: flex;
   flex-direction: column;
-  gap: 30px; 
-  color:white;
+  gap: 30px;
+  color: white;
 }
 
-.timer-section, .selected-songs-section, .sound-buttons-section {
+.timer-section,
+.selected-songs-section,
+.sound-buttons-section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,7 +133,23 @@ h1{
 }
 
 
-
+/* live clock */
+.clock-section{
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.live-timer{
+  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0, 0.4));
+  width: 8rem;
+  border-radius: 20%;
+  border: 2px solid #d47b3e;
+  align-self: center;
+  margin: 0 auto
+}
+.digital-clock{
+  font-family: RadioLand;
+  font-size: 2rem;
+}
 
 /* ---------------- SELECTED SONGS BUTTON CSS---------- */
 
@@ -133,16 +165,13 @@ a {
   letter-spacing: 2px;
   overflow: hidden;
   margin-right: 50px;
-
 }
 
 a:hover {
   background: #03e9f4;
   color: #050801;
-  box-shadow: 0 0 5px #03e9f4,
-      0 0 25px #03e9f4,
-      0 0 50px #03e9f4,
-      0 0 200px #03e9f4;
+  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+    0 0 200px #03e9f4;
   -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
 }
 
@@ -170,12 +199,12 @@ a span:nth-child(1) {
 
 @keyframes animate1 {
   0% {
-      left: -100%;
+    left: -100%;
   }
 
   50%,
   100% {
-      left: 100%;
+    left: 100%;
   }
 }
 
@@ -191,12 +220,12 @@ a span:nth-child(2) {
 
 @keyframes animate2 {
   0% {
-      top: -100%;
+    top: -100%;
   }
 
   50%,
   100% {
-      top: 100%;
+    top: 100%;
   }
 }
 
@@ -207,20 +236,19 @@ a span:nth-child(3) {
   height: 2px;
   background: linear-gradient(270deg, transparent, #03e9f4);
   animation: animate3 1s linear infinite;
-  animation-delay: 0.50s;
+  animation-delay: 0.5s;
 }
 
 @keyframes animate3 {
   0% {
-      right: -100%;
+    right: -100%;
   }
 
   50%,
   100% {
-      right: 100%;
+    right: 100%;
   }
 }
-
 
 a span:nth-child(4) {
   bottom: -100%;
@@ -234,22 +262,20 @@ a span:nth-child(4) {
 
 @keyframes animate4 {
   0% {
-      bottom: -100%;
+    bottom: -100%;
   }
 
   50%,
   100% {
-      bottom: 100%;
+    bottom: 100%;
   }
 }
 
 .selected-songs a.active {
   background: #03e9f4;
   color: #050801;
-  box-shadow: 0 0 5px #03e9f4,
-      0 0 25px #03e9f4,
-      0 0 50px #03e9f4,
-      0 0 200px #03e9f4;
+  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+    0 0 200px #03e9f4;
   /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
 
@@ -259,9 +285,7 @@ a span:nth-child(4) {
   /* margin: 20px 0; Adjust spacing as needed */
 }
 
-
 /* ---------------------------------------------------- */
-
 
 .sound-button {
   display: flex;
@@ -362,7 +386,9 @@ button[data-setter] {
   pointer-events: auto;
   align-items: center;
 }
-button[data-setter]:hover { opacity: 0.5; }
+button[data-setter]:hover {
+  opacity: 0.5;
+}
 
 .setters {
   position: absolute;
@@ -374,18 +400,20 @@ button[data-setter]:hover { opacity: 0.5; }
   float: left;
   margin-right: 28px;
 }
-.seconds-set { float: right; }
+.seconds-set {
+  float: right;
+}
 
 .controlls {
   position: absolute;
   text-align: center;
-  top: 20%; 
-  transform: translateX(-50%) translateY(-50%); 
+  top: 20%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .display-remain-time {
   font-weight: 100;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 65px;
   color: #e39157;
   background: none;
@@ -427,11 +455,13 @@ button[data-setter]:hover { opacity: 0.5; }
   border-top: none;
   border-bottom: none;
 }
-#pause:hover { opacity: 0.8; }
+#pause:hover {
+  opacity: 0.8;
+}
 .e-c-base {
   fill: none;
-  stroke: #B6B6B6;
-  stroke-width: 4px
+  stroke: #b6b6b6;
+  stroke-width: 4px;
 }
 .e-c-progress {
   fill: none;
@@ -440,11 +470,13 @@ button[data-setter]:hover { opacity: 0.5; }
   transition: stroke-dashoffset 0.7s;
 }
 .e-c-pointer {
-  fill: #FFF;
+  fill: #fff;
   stroke: #e39157;
   stroke-width: 2px;
 }
-#e-pointer { transition: transform 0.7s; }
+#e-pointer {
+  transition: transform 0.7s;
+}
 
 .circle {
   position: relative; /* Makes the circle a reference for absolute positioning */
@@ -453,11 +485,14 @@ button[data-setter]:hover { opacity: 0.5; }
   z-index: 0;
 }
 
-.setters, .controlls {
+.setters,
+.controlls {
   position: absolute;
   left: 50%;
   z-index: 1;
-  transform: translateX(-50%); /* Centers the elements horizontally with respect to the circle */
+  transform: translateX(
+    -50%
+  ); /* Centers the elements horizontally with respect to the circle */
 }
 
 .message {
@@ -484,28 +519,30 @@ button[data-setter]:hover { opacity: 0.5; }
 
 .reset-button .fa-refresh {
   font-size: 24px; /* adjust the size as necessary */
-  color: #e39157;  /* color as other buttons */
+  color: #e39157; /* color as other buttons */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* centers the icon */
 }
 
-.minutes-set, .seconds-set{
+.minutes-set,
+.seconds-set {
   width: 4rem;
 
-  height: 4rem
+  height: 4rem;
 }
 
-/* App.css */
+/* =============================== EVERYTHING THAT HAS TO DO WITH THE SIDEBAR ========================== */
 
+/* App.css */
 .sidebar-left {
-  position: absolute;
+  position: fixed; /* Change from absolute to fixed */
   left: 0;
   top: 0;
   height: 100%;
   z-index: 3;
-  width: 300px;  /* Adjust as needed */
+  width: 300px; /* Adjust as needed */
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
@@ -514,8 +551,8 @@ button[data-setter]:hover { opacity: 0.5; }
   box-sizing: border-box;
   overflow-y: auto;  /* For scrolling if the list is long */
   transition: left 0.7s;  /* Add transition for smooth animation */
-
 }
+
 
 /* BACKGROUND CHANGE FOR VIDEOS */
 
@@ -523,7 +560,7 @@ button[data-setter]:hover { opacity: 0.5; }
   color: lightgray;
   cursor: pointer;
   margin-bottom: 10px;
-  font-size: 20px;  /* Increase font size */
+  font-size: 20px; /* Increase font size */
 }
 
 .video-option:hover {
@@ -534,21 +571,20 @@ button[data-setter]:hover { opacity: 0.5; }
   color: lightgray;
   cursor: pointer;
   margin-bottom: 10px;
-  font-size: 18px;  /* Increase font size */
+  font-size: 18px; /* Increase font size */
   text-align: center;
 }
-.sound-select{
+.sound-select {
   margin: 20px;
-
 }
 
 .sidebar-left.hidden {
-  left: -300px;  /* Width of the sidebar */
+  left: -300px; /* Width of the sidebar */
 }
 
 .sidebar-toggle {
-  position: absolute;
-  left: 300px;  /* Width of the sidebar */
+  position: fixed; /* Change from absolute to fixed */
+  left: 300px; /* Adjust left position */
   top: 30%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -558,17 +594,18 @@ button[data-setter]:hover { opacity: 0.5; }
   height: 100px;
   font-size: 20px;
   padding: 10px;
-  transition: left 0.7s;  /* Add transition for smooth animation */
+  transition: left 0.7s; /* Add transition for smooth animation */
   border-radius: 0 30px 30px 0;
   width: 3rem;
-  
   z-index: 3;
 }
+
 
 /* This will move the button along with the sidebar when the sidebar is hidden */
 .sidebar-toggle.hidden {
   left: 0px;
 }
+
 
 
  /* ---------------------------------------------- todo list ------------------------------ */
@@ -746,3 +783,87 @@ button[data-setter]:hover { opacity: 0.5; }
   text-align: right;
   /* You can customize the color, size, etc. as needed */
 }
+/* ---------------------------------- LOGOUT/SIGNIN BUTTON STYLE -------------------------------- */
+/* Logout Link Styles */
+
+.logout-link-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.logout-link {
+  position: relative;
+  display: inline-block;
+  padding: 20px 35px;
+  /* margin: 40px 0; */
+  color: red;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  letter-spacing: 2px;
+  overflow: hidden;
+  margin-right: 50px;
+  margin-bottom: 45px;
+}
+
+.logout-link:hover {
+  background: red;
+  color: black;
+  box-shadow: 0 0 5px red, 0 0 25px red, 0 0 50px red, 0 0 200px red;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+  cursor: pointer;
+}
+
+/* Reusing the animation styles for the logout link */
+.logout-link span {
+  position: absolute;
+  display: block;
+}
+
+.logout-link span:nth-child(1),
+.logout-link span:nth-child(2),
+.logout-link span:nth-child(3),
+.logout-link span:nth-child(4) {
+  background: linear-gradient(90deg, transparent, black);
+}
+
+/* =============================================================================== */
+
+.settings-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; 
+  max-width: 500px; 
+  background-color: #fff; 
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001; 
+}
+
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 1000; 
+
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
