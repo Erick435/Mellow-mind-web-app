@@ -45,7 +45,7 @@ const Soundboard = () => {
         const audioElements = document.getElementsByTagName('audio');
         for (let i = 0; i < audioElements.length; i++) {
             if (!audioElements[i].paused) {
-                audioElements[i].pause();
+                fadeOut(audioElements[i], 2000); // Fade out over 2 seconds
             }
         }
         for (let i = 0; i < audioElements.length; i++) {
@@ -53,6 +53,50 @@ const Soundboard = () => {
             audioElements[i].dispatchEvent(event);
         }
     };
+
+    const handleAudioResume = () => {
+        const audioElements = document.getElementsByTagName('audio');
+        for (let i = 0; i < audioElements.length; i++) {
+            fadeIn(audioElements[i], 2000); // Fade in over 2 seconds
+        }
+    };
+    
+    
+    function fadeOut(audio, duration) {
+        const startVolume = audio.volume;
+        const startTime = Date.now();
+    
+        const fade = () => {
+            const elapsed = Date.now() - startTime;
+            if (elapsed < duration) {
+                audio.volume = startVolume * (1 - elapsed / duration);
+                requestAnimationFrame(fade);
+            } else {
+                audio.volume = 0;
+            }
+        };
+    
+        fade();
+    }
+    
+    function fadeIn(audio, duration) {
+        const startVolume = 0;
+        const targetVolume = 0.2;
+        const startTime = Date.now();
+    
+        const fade = () => {
+            const elapsed = Date.now() - startTime;
+            if (elapsed < duration) {
+                audio.volume = startVolume + targetVolume * (elapsed / duration);
+                requestAnimationFrame(fade);
+            } else {
+                audio.volume = targetVolume;
+            }
+        };
+    
+        fade();
+    }
+    
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -109,6 +153,7 @@ const Soundboard = () => {
                         <Timer 
                             onPause={handleAudioPause} 
                             onRestStart={handleAudioPause} 
+                            onFocusStart={handleAudioResume}
                             focusTime={focusTime}
                             breakTime={breakTime}
                         />

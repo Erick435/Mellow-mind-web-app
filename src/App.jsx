@@ -23,7 +23,7 @@ function App() {
   return (
     // Background Video
     <>
-      <div style={{ width: "100vw", height: "100vh", position: "absolute", top: 0, left: 0, zIndex: -1 }}>
+      <div style={{ width: "100%", height: "100vh", position: "absolute", top: 0, left: 0, zIndex: -1 }}>
         <video
           src={selectedVideo}
           width="100%"
