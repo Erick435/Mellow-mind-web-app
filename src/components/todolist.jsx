@@ -5,6 +5,8 @@ function TodoList({ onTaskSelect }) {
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState([]);
   const popupRef = useRef(null);
+  const inputRef = useRef(null); // Create ref for the input element
+
 
   const handleOpenPopup = () => {
     setPopupVisibility(true);
@@ -50,10 +52,21 @@ function TodoList({ onTaskSelect }) {
   };
 
   const handleDeleteTask = (index) => {
+    if (selectedTask === index) {
+      setSelectedTask(null); // Unselect the task if it's the currently selected one
+      onTaskSelect(null); // Notify the parent component
+    }
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
+
+  useEffect(() => {
+    if (isPopupVisible && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isPopupVisible]);
+  
   
 
   return (
@@ -66,6 +79,7 @@ function TodoList({ onTaskSelect }) {
             <h3>Add Task</h3>
             <form onSubmit={handleAddTask}> {/* Wrap in a form with onSubmit */}
               <input
+                ref={inputRef} // Assign ref to the input element
                 className="task-input"
                 type="text"
                 value={newTask}
