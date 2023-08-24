@@ -23,7 +23,7 @@
     opacity: 1;
   }
 }
-
+/* FONTS */
 @font-face {
   font-family: "Aquatico";
   src: local("Aquatico"), url("./fonts/Aquatico-Regular.otf") format("opentype");
@@ -36,7 +36,17 @@
   font-family: "MoonBold";
   src: local("MoonBold"), url("./fonts/Moon2.0-Bold.otf") format("opentype");
 }
+@font-face {
+  font-family: 'RadioLandSlim';
+  src: local('RadioLandSlim'), url('./fonts/RADIOLANDSLIM.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RadioLand';
+  src: local('RadioLand'), url('./fonts/RADIOLAND.TTF') format('truetype');
+}
 
+
+/* STYLE */
 body {
   margin: 0;
   height: 100%;
@@ -94,7 +104,8 @@ h1 {
 
 .soundboard {
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  position: relative;
+  background-color:rgba(0, 0, 0, 0.4);
   margin: 5rem;
   padding: 10px;
   border: 2px solid #ffffff; /* Fall theme color - you can choose your desired color */
@@ -119,6 +130,25 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+
+/* live clock */
+.clock-section{
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.live-timer{
+  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0, 0.4));
+  width: 8rem;
+  border-radius: 20%;
+  border: 2px solid #d47b3e;
+  align-self: center;
+  margin: 0 auto
+}
+.digital-clock{
+  font-family: RadioLand;
+  font-size: 2rem;
 }
 
 /* ---------------- SELECTED SONGS BUTTON CSS---------- */
@@ -507,7 +537,7 @@ button[data-setter]:hover {
 
 /* App.css */
 .sidebar-left {
-  position: absolute;
+  position: fixed; /* Change from absolute to fixed */
   left: 0;
   top: 0;
   height: 100%;
@@ -519,9 +549,10 @@ button[data-setter]:hover {
   align-items: flex-start;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto; /* For scrolling if the list is long */
-  transition: left 0.7s; /* Add transition for smooth animation */
+  overflow-y: auto;  /* For scrolling if the list is long */
+  transition: left 0.7s;  /* Add transition for smooth animation */
 }
+
 
 /* BACKGROUND CHANGE FOR VIDEOS */
 
@@ -552,8 +583,8 @@ button[data-setter]:hover {
 }
 
 .sidebar-toggle {
-  position: absolute;
-  left: 300px; /* Width of the sidebar */
+  position: fixed; /* Change from absolute to fixed */
+  left: 300px; /* Adjust left position */
   top: 30%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -566,14 +597,15 @@ button[data-setter]:hover {
   transition: left 0.7s; /* Add transition for smooth animation */
   border-radius: 0 30px 30px 0;
   width: 3rem;
-
   z-index: 3;
 }
+
 
 /* This will move the button along with the sidebar when the sidebar is hidden */
 .sidebar-toggle.hidden {
   left: 0px;
 }
+
 
 /* ---------------------------------- LOGOUT/SIGNIN BUTTON STYLE -------------------------------- */
 /* Logout Link Styles */
@@ -622,3 +654,40 @@ button[data-setter]:hover {
 }
 
 /* =============================================================================== */
+
+.settings-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; 
+  max-width: 500px; 
+  background-color: #fff; 
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001; 
+}
+
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 1000; 
+
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
