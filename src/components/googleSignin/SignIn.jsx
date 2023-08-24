@@ -1,6 +1,7 @@
 import React from "react";
 import { auth, provider } from "./config";
 import { signInWithPopup } from "firebase/auth";
+import './signin.css'
 
 function SignIn({ handleLogin }) {
     const signInWithGoogle = () => {
@@ -16,7 +17,9 @@ function SignIn({ handleLogin }) {
     return (
         <div>
             <h1>Hello and welcome</h1>
-            <button onClick={signInWithGoogle}>Signin with Google</button>;
+            <div className="signin-link" onClick={signInWithGoogle}>
+                Sign In
+            </div>
         </div>
     );
 }

@@ -24,28 +24,6 @@ const soundData = [
 const Soundboard = () => {
     const [selectedSound, setSelectedSound] = React.useState(soundData[0].soundSrc); // Default to the first sound
 
-    // const handleMasterPause = () => {
-    //     const audioElements = document.getElementsByTagName('audio');
-    //     for (let i = 0; i < audioElements.length; i++) {
-    //         if (!audioElements[i].paused) {
-    //             audioElements[i].pause();
-    //         }
-    //     }
-    // };
-
-    // const handleAudioPause = () => {
-    //     const audioElements = document.getElementsByTagName('audio');
-    //     for (let i = 0; i < audioElements.length; i++) {
-    //         if (!audioElements[i].paused) {
-    //             audioElements[i].pause();
-    //         }
-    //     }
-    //     for (let i = 0; i < audioElements.length; i++) {
-    //         let event = new Event('audioPaused');
-    //         audioElements[i].dispatchEvent(event);
-    //     }
-    // };
-
     const handleAudioPause = () => {
         const audioElements = document.getElementsByTagName('audio');
         for (let i = 0; i < audioElements.length; i++) {
@@ -65,13 +43,6 @@ const Soundboard = () => {
             }
         }
     };
-    
-    
-    
-    
-
-    
-    
     
     
     return (
