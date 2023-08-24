@@ -68,7 +68,13 @@ const Soundboard = () => {
                         <Timer onPause={handleAudioPause} onRestStart={handleAudioPause} />
                     </div>
 
+                    {/* Toggle Soundboard Button */}
+                    <button className="toggle-soundboard" onClick={toggleSoundboard}>
+                        {showSoundboard ? 'Hide Soundboard' : 'Show Soundboard'}
+                    </button>
+
                     {/* Selected Songs Section */}
+                    {showSoundboard && (
                     <div className="selected-songs-section">
                         <div className="selected-songs">
                             {soundData.slice(0, 3).map((sound) => (
@@ -86,12 +92,7 @@ const Soundboard = () => {
                             ))}
                         </div>
                     </div>
-
-                    {/* Toggle Soundboard Button */}
-                    <button className="toggle-soundboard" onClick={toggleSoundboard}>
-                        {showSoundboard ? 'Hide Soundboard' : 'Show Soundboard'}
-                    </button>
-
+                    )}
 
                     {/* Sound Buttons Section */}
                     {showSoundboard && (
