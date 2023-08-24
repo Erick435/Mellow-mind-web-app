@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 
 
-const Timer = ({onPause, onRestStart, onResume}) => {
-    const [wholeTime, setWholeTime] = useState(25 * 60);
-    const [timeLeft, setTimeLeft] = useState(wholeTime);
+const Timer = ({onPause, onRestStart, focusTime = 25, breakTime = 5}) => {
+    const focusTimeInSeconds = focusTime * 60;
+    const [wholeTime, setWholeTime] = useState(focusTimeInSeconds);
+    const [timeLeft, setTimeLeft] = useState(focusTimeInSeconds);
     const [isPaused, setIsPaused] = useState(true);
     const [isStarted, setIsStarted] = useState(false);
     const [timerType, setTimerType] = useState('main'); // 'main' for main timer, 'additional' for 20% timer
@@ -17,17 +18,18 @@ const Timer = ({onPause, onRestStart, onResume}) => {
     const progressBarRef = useRef(null);
     const pointerRef = useRef(null);
 
-    const resetTimer = () => {
-        setWholeTime(25 * 60);
-        setTimeLeft(25 * 60);
+    const resetTimer = (isForFocus = true) => {
+        const newTime = isForFocus ? focusTime * 60 : breakTime * 60;
+        setWholeTime(newTime);
+        setTimeLeft(newTime);
         setIsStarted(false);
-        setIsMainTimer(true); // ensure main timer will start next
+        setIsMainTimer(isForFocus); // ensure main timer will start next
     };
     
 
     useEffect(() => {
         if (!isStarted) return;
-
+    
         if (isPaused) {
             clearInterval(intervalRef.current);
         } else {
@@ -35,55 +37,32 @@ const Timer = ({onPause, onRestStart, onResume}) => {
                 setTimeLeft((prevTime) => {
                     if (prevTime <= 1) {
                         clearInterval(intervalRef.current);
-
+    
                         if (isMainTimer) {
                             setIsMainTimer(false);
-                            onRestStart();  // Call the onRestStart callback when the rest timer starts
-                            const newTime = Math.round(wholeTime * 0.2);
-                            return newTime;
+                            onRestStart();
+                            resetTimer(false); // Set up for the rest timer
+                            setIsStarted(true); // Restart the timer
+                            return breakTime * 60; // Use the breakTime prop for rest
                         } else {
                             setIsMainTimer(true);
-                            return wholeTime;
+                            resetTimer(true); // Set up for the main timer
+                            setIsStarted(true); // Restart the timer
+                            return focusTimeInSeconds; // Use the focusTimeInSeconds for main
                         }
                     }
                     return prevTime - 1;
                 });
             }, 1000);
         }
-
+    
         return () => clearInterval(intervalRef.current);
-    }, [isPaused, isStarted, wholeTime, isMainTimer, onRestStart]); // Add onRestStart to the dependency array
+    }, [isPaused, isStarted, wholeTime, isMainTimer, onRestStart, breakTime, focusTimeInSeconds]);
+    
 
-
-
-    const handleSetterClick = (setterType) => {
-        if (!isStarted) {
-            let timeAdjustment;
-
-            switch (setterType) {
-                case 'minutes-plus':
-                    timeAdjustment = 60;
-                    break;
-                case 'minutes-minus':
-                    timeAdjustment = -60;
-                    break;
-                case 'seconds-plus':
-                    timeAdjustment = 1;
-                    break;
-                case 'seconds-minus':
-                    timeAdjustment = -1;
-                    break;
-                default:
-                    timeAdjustment = 0;
-            }
-            
-        console.log(displayTime)
-            const newTime = Math.max(wholeTime + timeAdjustment, 0);
-            setWholeTime(newTime);
-            setTimeLeft(newTime);
-            setIsMainTimer(true); // reset back to the main timer
-        }
-    };
+    useEffect(() => {
+        resetTimer();
+    }, [focusTime, breakTime]);    
 
     const togglePause = () => {
         // console.log("Toggling pause", { isStarted, isPaused });
@@ -128,18 +107,6 @@ const Timer = ({onPause, onRestStart, onResume}) => {
                 <div className={`message ${!isPaused ? "pulsing" : ""}`}>
                     <b>{isMainTimer ? "Focus" : "Rest"}</b>
                 </div>
-                {!isStarted && ( 
-                    <>
-                <div className="minutes-set">
-                    <button classname="setter-button" data-setter="minutes-minus" onClick={() => handleSetterClick('minutes-minus')}>-</button>
-                    <button classname="setter-button" data-setter="minutes-plus" onClick={() => handleSetterClick('minutes-plus')}>+</button>
-                </div>
-                <div className="seconds-set">
-                    <button classname="setter-button" data-setter="seconds-minus" onClick={() => handleSetterClick('seconds-minus')}>-</button>
-                    <button classname="setter-button" data-setter="seconds-plus" onClick={() => handleSetterClick('seconds-plus')}>+</button>
-                </div>
-                    </>
-                )}
             </div>
             <div className="circle">
                 <svg width="300" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
