@@ -116,10 +116,10 @@ function App() {
             ))}
           </div>
           {user && (
-            <div>
-              <button onClick={handleLogout} style={{ marginTop: '15px' }}>
+            <div className="logout-link-container" >
+              <div className="logout-link" onClick={handleLogout}>
                 Logout
-              </button>
+              </div>
             </div>
           )}
         </div>

@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* SignIn Link Styles (they'll be the same as the logout, just with a different class name) */
+.signin-link {
+    position: relative;
+    display: inline-block;
+    padding: 30px 35px;
+    margin: 40px 0;
+    color: #03e9f4;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 2px;
+    overflow: hidden;
+    margin-right: 50px;
+}
+
+.signin-link:hover {
+    background: #03e9f4;
+    color: black;
+    box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+        0 0 200px #03e9f4;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+    cursor: pointer;
+}
+
+.signin-link span {
+    position: absolute;
+    display: block;
+}
+
+.signin-link span:nth-child(1),
+.signin-link span:nth-child(2),
+.signin-link span:nth-child(3),
+.signin-link span:nth-child(4) {
+    background: linear-gradient(90deg, transparent, black);
+}
