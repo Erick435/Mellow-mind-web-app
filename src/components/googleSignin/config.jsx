@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider} from "firebase/auth"
 // import { getFirestore } from "@firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDFmAGsMgXN8c3E3UrG6DwJW-mc97CwB-E",
-    authDomain: "mellow-mind-c0958.firebaseapp.com",
-    projectId: "mellow-mind-c0958",
-    storageBucket: "mellow-mind-c0958.appspot.com",
-    messagingSenderId: "293295245938",
-    appId: "1:293295245938:web:8def012fff2e71a02990eb",
-    measurementId: "G-WPL0LLGMJ2"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_DOMAIN_ID,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_PROJECT_STORAGE,
+    messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER,
+    appId: process.env.REACT_APP_PROJECT_APP_ID,
+    measurementId: process.env.REACT_APP_MEASURE_ID
 };
 
 // Initialize Firebase
