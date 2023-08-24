@@ -55,7 +55,6 @@ const Timer = ({onPause, onRestStart, focusTime = 25, breakTime = 5}) => {
                 });
             }, 1000);
         }
-    
         return () => clearInterval(intervalRef.current);
     }, [isPaused, isStarted, wholeTime, isMainTimer, onRestStart, breakTime, focusTimeInSeconds]);
     
@@ -99,7 +98,40 @@ const Timer = ({onPause, onRestStart, focusTime = 25, breakTime = 5}) => {
         updatePointer(timeLeft);
     }, [timeLeft, wholeTime]);
 
+    // Functions allow the timer display to be changed manually instead of buttons
+    const handleTimeInputChange = (e) => {
+        let value = e.target.value;
+
+        // Strip out non-numeric characters
+        value = value.replace(/\D/g, '');
+
+        // Ensure the value is not too long
+        if (value.length <= 4) {
+            // Add leading zeros if needed
+            while (value.length < 4) value = '0' + value;
+
+            // Insert the colon to make it MM:SS format
+            value = value.slice(0, 2) + ':' + value.slice(2);
+
+            setDisplayTime(value);
+        }
+    };
+
+
+
+    const handleTimeInputBlur = () => {
+        // Convert the display time to seconds and update the timer
+        const [minutes, seconds] = displayTime.split(":").map(Number);
+        const totalTimeInSeconds = (minutes * 60) + seconds;
+
+        setWholeTime(totalTimeInSeconds);
+        setTimeLeft(totalTimeInSeconds);
+    };
+
+
+
     const displayTime = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+
 
     return (
         <div>

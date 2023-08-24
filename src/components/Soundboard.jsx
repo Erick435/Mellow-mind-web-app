@@ -32,28 +32,26 @@ const Soundboard = () => {
     const [focusTime, setFocusTime] = React.useState(25); // default 25 mins
     const [breakTime, setBreakTime] = React.useState(5); 
 
-    
+    const handleAudioPause = () => {
+        const audioElements = document.getElementsByTagName('audio');
+        for (let i = 0; i < audioElements.length; i++) {
+            if (audioElements[i] && !audioElements[i].paused) {
+                audioElements[i].pause();
+                let event = new Event('audioPaused');
+                audioElements[i].dispatchEvent(event);
+            }
+        }
+    };
+
     const handleMasterPause = () => {
         const audioElements = document.getElementsByTagName('audio');
         for (let i = 0; i < audioElements.length; i++) {
-            if (!audioElements[i].paused) {
+            if (audioElements[i] && !audioElements[i].paused) {
                 audioElements[i].pause();
             }
         }
     };
 
-    const handleAudioPause = () => {
-        const audioElements = document.getElementsByTagName('audio');
-        for (let i = 0; i < audioElements.length; i++) {
-            if (!audioElements[i].paused) {
-                audioElements[i].pause();
-            }
-        }
-        for (let i = 0; i < audioElements.length; i++) {
-            let event = new Event('audioPaused');
-            audioElements[i].dispatchEvent(event);
-        }
-    };
 
     const openModal = () => {
         setIsModalOpen(true);
