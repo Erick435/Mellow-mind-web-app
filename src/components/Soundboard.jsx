@@ -28,9 +28,11 @@ Modal.setAppElement('#root');
 
 const Soundboard = () => {
     const [selectedSound, setSelectedSound] = React.useState(soundData[0].soundSrc); // Default to the first sound
+    const [showSoundboard, setShowSoundboard] = React.useState(false);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [focusTime, setFocusTime] = React.useState(25); // default 25 mins
     const [breakTime, setBreakTime] = React.useState(5); 
+
 
     const handleAudioPause = () => {
         const audioElements = document.getElementsByTagName('audio');
@@ -52,6 +54,11 @@ const Soundboard = () => {
         }
     };
 
+    
+    const toggleSoundboard = () => {
+        setShowSoundboard(!showSoundboard);
+    };
+    
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -60,6 +67,7 @@ const Soundboard = () => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+
     
     
     return (
@@ -113,7 +121,14 @@ const Soundboard = () => {
                             breakTime={breakTime}
                         />
                     </div>
+
+                    {/* Toggle Soundboard Button */}
+                    <button className="toggle-soundboard" onClick={toggleSoundboard}>
+                        {showSoundboard ? 'Hide Soundboard' : 'Show Soundboard'}
+                    </button>
+
                     {/* Selected Songs Section */}
+                    {showSoundboard && (
                     <div className="selected-songs-section">
                         <div className="selected-songs">
                             {soundData.slice(0, 3).map((sound) => (
@@ -131,16 +146,20 @@ const Soundboard = () => {
                             ))}
                         </div>
                     </div>
+                    )}
 
                     {/* Sound Buttons Section */}
-                    <div className="sound-buttons-section">
-                        <div className="sound-buttons">
-                            <SoundButton soundSrc={selectedSound} label="Selected Sound" />
-                            {soundData.slice(3).map((sound) => (
-                                <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} />
-                            ))}
+                    {showSoundboard && (
+                        <div className="sound-buttons-section">
+                            <div className="sound-buttons">
+                                <SoundButton soundSrc={selectedSound} label="Selected Sound" />
+                                {soundData.slice(3).map((sound) => (
+                                    <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} />
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
+
 
                 </div>
 
