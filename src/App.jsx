@@ -107,13 +107,13 @@ function App() {
         <Soundboard />
 
         {/* Sidebar Toggle Button */}
-        <button className={`sidebar-toggle ${isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
-          {isSidebarVisible ? '◀' : '▶'}
+        <button className={`sidebar-toggle ${!isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
+          {isSidebarVisible ?'▶' : '◀' }
         </button>
 
 
         {/* Video Sidebar */}
-        <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
+        <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden'}`}>
         <TodoList onTaskSelect={setSelectedTask} />
           <div>
             <i className='video-option-head'>Backgrounds<br />-</i>
