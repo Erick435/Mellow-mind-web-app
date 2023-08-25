@@ -129,7 +129,7 @@ function App() {
         </div>
       </div>
       <Routes>
-        <Route path="/payment" element={<PaymentPage userId={user.uid}/>} />
+        {/* <Route path="/payment" element={<PaymentPage userId={user.uid}/>} /> */}
         {/* Other routes */}
       </Routes>
     </>
