@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import "font-awesome/css/font-awesome.min.css";
 
-const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5 }) => {
+const Timer = ({
+  onPause,
+  onRestStart,
+  focusTime = 25,
+  breakTime = 5,
+  onFocusStart,
+}) => {
   const focusTimeInSeconds = focusTime * 60;
   const [wholeTime, setWholeTime] = useState(focusTimeInSeconds);
   const [timeLeft, setTimeLeft] = useState(focusTimeInSeconds);
