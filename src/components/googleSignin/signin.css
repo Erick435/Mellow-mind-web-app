@@ -5,7 +5,8 @@
 
 /* ------------------------------- LANDING PAGE CONTAINER ---------------------- */
 .landingPageContainer{
-    background-color: white;
+
+    background: linear-gradient(#237fe2, #fa9e50);    
     margin: 0px;
     font-family: Arial, sans-serif;
     
@@ -21,13 +22,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+    height: 15vh
 }
 
 .title-container {
     display: flex;
     align-items: center; /* To vertically center the image and title */
     gap: 10px; /* Space between the image and title */
+    color: white;
 }
 
 
@@ -53,8 +55,8 @@ img{
     letter-spacing: 2px;
     overflow: hidden;
     margin-right: 25px;
-    border: 2px solid black;
-    box-shadow: 3px 3px 3px black;
+    border: 2px solid#03e9f4;
+    box-shadow: 3px 3px 3px #03e9f4;
 }
 
 .signin-link:hover {
@@ -84,15 +86,17 @@ img{
 
 .carousel-container {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    min-width: 600px;
+    margin: 0 0;
     overflow: hidden;
 }
 
 .carousel-container img {
     width: auto;
     display: block;
-    height: 300px;
+    height: auto;
+    width: 100vw;
+    
 }
 
 /* Navigation dots in the carousel images */
@@ -110,6 +114,7 @@ img{
     margin: 0 5px;
     cursor: pointer;
     transition: background 0.3s;
+    display:none
 }
 
 .dot.active {
@@ -117,3 +122,36 @@ img{
 }
 
 /* ================================================================== */
+
+
+
+.google-G{
+    color: #e92f29
+}
+b{
+    font-weight: bolder;
+}
+
+.infos{
+    margin: 10px auto;
+    text-align: center;
+    line-height: 5rem;
+    color: rgb(255, 255, 255);
+}
+
+.spinner{
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.instructions{
+    font-family: Aquatico;
+    letter-spacing: 5px;
+}

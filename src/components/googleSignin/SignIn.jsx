@@ -2,6 +2,7 @@ import React from "react";
 import { auth, provider } from "./config";
 import { signInWithPopup } from "firebase/auth";
 import './signin.css';
+import { FaGoogle, FaStopwatch, FaSpinner, FaMusic , FaBullseye} from 'react-icons/fa6'
 
 // ------------------------ SIGNING IN FUNCTION/ GOOGLE FIREBASE ---------------
 function SignIn({ handleLogin }) {
@@ -51,7 +52,7 @@ function SignIn({ handleLogin }) {
                     <h1>MellowMind</h1>
                 </div>
                 <div className="signin-link" onClick={signInWithGoogle}>
-                    Sign In
+                   <b> Sign In with <FaGoogle className="google-G"/></b>oogle
                 </div>
             </div>
             {/* ========================================================= */}
@@ -73,7 +74,14 @@ function SignIn({ handleLogin }) {
 
             </div>
             {/* ================================================================== */}
-
+                        <div className="infos">
+                            <h1 className="instructions">
+                               <FaMusic />  Listen <br />
+                               <FaStopwatch />  Focus <br />
+                                <FaSpinner className="spinner"/> Rest <br />
+                                <FaBullseye /> Experience 
+                            </h1>
+                        </div>
         </div>
     );
 }
