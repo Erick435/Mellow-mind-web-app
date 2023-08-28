@@ -567,9 +567,10 @@ button[data-setter]:hover {
   align-items: flex-start;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto; /* For scrolling if the list is long */
-  transition: left 0.7s; /* Add transition for smooth animation */
+  overflow-y: auto;  /* For scrolling if the list is long */
+  transition: left 0.7s;  /* Add transition for smooth animation */
 }
+
 
 /* BACKGROUND CHANGE FOR VIDEOS */
 
@@ -595,7 +596,7 @@ button[data-setter]:hover {
   margin: 20px;
 }
 
-.sidebar-left.hidden-bar {
+.sidebar-left.hidden {
   left: -300px; /* Width of the sidebar */
 }
 
@@ -617,15 +618,16 @@ button[data-setter]:hover {
   z-index: 3;
 }
 
+
 /* This will move the button along with the sidebar when the sidebar is hidden */
-.sidebar-toggle.hidden-bar {
+.sidebar-toggle.hidden {
   left: 0px;
 }
 
 
 
  /* ---------------------------------------------- todo list ------------------------------ */
- .todo-list .tasks-button {
+.todo-list .tasks-button {
   position: absolute; /* Change to absolute */
   top: 300px; /* Position from the top */
   left: 15px; /* Adjust this to match your sidebar's position */
@@ -635,8 +637,20 @@ button[data-setter]:hover {
   border-radius: 20px; /* Making the button rounder */
   text-align: center; /* Centering the text inside the button */
   line-height: 40px; /* Aligning the text vertically */
+  color: white;
+  border: 1px solid white; /* Add this line to add a white border */  
+  background: transparent;
+  transition: background 0.3s, transform 0.3s;
+
 }
 
+.todo-list .tasks-button:hover {
+  background-color: white; /* White background when hovered */
+  color: black; /* Black text color when hovered */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.05); 
+  cursor: pointer; 
+}
 
 .todo-list .popup {
   position: fixed;
@@ -651,6 +665,7 @@ button[data-setter]:hover {
   width: 600px;
   height: 300px;
   height: auto;
+  border-radius: 10px;
 }
 
 /* You might need to tweak these styles to fit your app's theme */
@@ -688,6 +703,31 @@ button[data-setter]:hover {
   width: 280px;
   color: white;
 }
+/* Scrollbar styles for WebKit browsers (Chrome, Safari, newer versions of Opera) */
+.todo-list .tasks-border::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-list .tasks-border::-webkit-scrollbar-thumb {
+  background-color: rgb(197, 190, 190);
+  border-radius: 4px;
+}
+
+.todo-list .tasks-border::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(197, 190, 190);
+}
+
+.todo-list .tasks-border::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+
+/* Scrollbar styles for Firefox */
+.todo-list .tasks-border {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
 
 
 
@@ -716,16 +756,23 @@ button[data-setter]:hover {
   justify-content: space-between;
 }
 
-.todo-list .add-button {
-
+.todo-list .add-button, .todo-list .cancel-button {
+  width: 80px;            /* Fixed width */
+  height: 40px;            /* Fixed height */
   padding: 5px;
-  text-align: center; /* Centering the "+" symbol */
+  text-align: center;
+  line-height: 30px;       /* Aligning text vertically */
+  border: 2px solid #ccc;  /* Adding border */
+  border-radius: 4px;      /* Making the border rounded */
+  transition: border-color 0.3s ease; /* Smooth color transition */
+  cursor: pointer;         /* To show it's clickable */
+  margin-top: 12px;
 }
 
-.todo-list .cancel-button {
-  text-align: center; /* Centering the "+" symbol */
-  padding: 5px;
+.todo-list .add-button:hover, .todo-list .cancel-button:hover {
+  border-color: rgb(88, 87, 87);  /* Change border color on hover */
 }
+
 
 
 .border-title {
@@ -754,7 +801,7 @@ button[data-setter]:hover {
   word-wrap: break-word; /* Break long words to the next line */
   overflow-wrap: break-word;
   flex-grow: 1; /* Allows the text to take remaining space */
-  max-width: calc(100% - 30px); /* Limits the width, considering the circle and margin */
+  max-width: calc(100% - 60px); /* Adjusted considering the circle, margin, and delete button */
 }
 
 
@@ -777,6 +824,7 @@ button[data-setter]:hover {
 
 .tasks-border {
   position: relative;
+  border-radius: 5px;
 }
 
 .task-row {
@@ -795,8 +843,9 @@ button[data-setter]:hover {
 .task-delete {
   color: #F44336;
   cursor: pointer;
-  width: 20px; /* Adjust based on the size of the delete icon */
+  width: 30px; /* A fixed width for the trash can ensures it stays in position */
   text-align: right;
+  flex-shrink: 0; /* Prevents shrinking */
   /* You can customize the color, size, etc. as needed */
 }
 /* ---------------------------------- LOGOUT/SIGNIN BUTTON STYLE -------------------------------- */
