@@ -1,17 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const SoundButton = ({ soundSrc, label }) => {
+const SoundButton = ({ soundSrc, label, mainSongPlaying, setMainSongPlaying }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   const handleButtonClick = () => {
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
+      if (mainSongPlaying) {
+        setMainSongPlaying(false);
+      }
     } else {
       audioRef.current.play();
+      setIsPlaying(true);
+      if (!mainSongPlaying) {
+        setMainSongPlaying(true);
+      }
     }
-    setIsPlaying(!isPlaying);
   };
+  
 
   const handleVolumeChange = (event) => {
     event.stopPropagation();

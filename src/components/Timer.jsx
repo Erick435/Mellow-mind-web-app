@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import "font-awesome/css/font-awesome.min.css";
+
 const Timer = ({
   onPause,
   onRestStart,
+  onResume,
   focusTime = 25,
   breakTime = 5,
-  onFocusStart,
+  areAudiosPlaying,
+  setAreAudiosPlaying,
 }) => {
   const focusTimeInSeconds = focusTime * 60;
   const [wholeTime, setWholeTime] = useState(focusTimeInSeconds);
@@ -14,9 +17,11 @@ const Timer = ({
   const [isStarted, setIsStarted] = useState(false);
   const [timerType, setTimerType] = useState("main"); // 'main' for main timer, 'additional' for 20% timer
   const [isMainTimer, setIsMainTimer] = useState(true); // true for main, false for additional
+  // const [areAudiosPlaying, setAreAudiosPlaying] = useState(false);
   const intervalRef = useRef(null);
   const progressBarRef = useRef(null);
   const pointerRef = useRef(null);
+
   const resetTimer = (isForFocus = true) => {
     const newTime = isForFocus ? focusTime * 60 : breakTime * 60;
     setWholeTime(newTime);
@@ -24,6 +29,7 @@ const Timer = ({
     setIsStarted(false);
     setIsMainTimer(isForFocus); // ensure main timer will start next
   };
+
   useEffect(() => {
     if (!isStarted) return;
     if (isPaused) {
@@ -60,28 +66,46 @@ const Timer = ({
     breakTime,
     focusTimeInSeconds,
   ]);
+
   useEffect(() => {
     resetTimer();
   }, [focusTime, breakTime]);
+
   const togglePause = () => {
-    // console.log("Toggling pause", { isStarted, isPaused });
     if (timerType === "additional" && isPaused && !isStarted) {
       setTimerType("main");
       setTimeLeft(wholeTime);
     } else if (!isStarted) {
       setIsStarted(true);
       setIsPaused(false);
-    } else {
+      if (areAudiosPlaying) {
+        onResume(); // Resume audios when starting the timer
+      }
+    }   else {
       setIsPaused((prevPauseState) => {
         if (!prevPauseState) {
-          onPause(); // Call the onPause callback when pausing the timer
+          onPause();
+          onPause(); // Use the function from props
         } else {
-          // onResume(); // Call the onResume callback when resuming the timer
+          onResume();
+          if (areAudiosPlaying) {
+            onResume(); // Use the function from props
+          }
         }
         return !prevPauseState;
       });
     }
   };
+
+  useEffect(() => {
+    if (isPaused && isStarted) {
+      setAreAudiosPlaying(true);
+      onPause(); // Use the function from props
+    } else {
+      setAreAudiosPlaying(false);
+    }
+  }, [isPaused, isStarted]);
+
   useEffect(() => {
     const length = Math.PI * 2 * 100;
     progressBarRef.current.style.strokeDasharray = length;
@@ -94,6 +118,9 @@ const Timer = ({
     };
     updatePointer(timeLeft);
   }, [timeLeft, wholeTime]);
+
+
+
   const displayTime = `${Math.floor(timeLeft / 60)
     .toString()
     .padStart(2, "0")}:${(timeLeft % 60).toString().padStart(2, "0")}`;
