@@ -37,6 +37,8 @@ const Soundboard = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [focusTime, setFocusTime] = React.useState(25); // default 25 mins
   const [breakTime, setBreakTime] = React.useState(5);
+  
+  const [areAudiosPlaying, setAreAudiosPlaying] = useState(false);
 
   const handleMasterPause = () => {
     const audioElements = document.getElementsByTagName("audio");
@@ -68,7 +70,9 @@ const Soundboard = () => {
   const handleAudioResume = () => {
     const audioElements = document.getElementsByTagName("audio");
     for (let i = 0; i < audioElements.length; i++) {
-      fadeIn(audioElements[i], 2000); // Fade in over 2 seconds
+      if (!audioElements[i].paused) {
+        fadeIn(audioElements[i], 2000); // Fade in over 2 seconds
+      }
     }
   };
 
@@ -138,7 +142,7 @@ const Soundboard = () => {
           <LiveTimer />
         </div>
         <button onClick={openModal} className="settings-btn">
-          <FaGear color="white" size="3em" />
+          <FaGear color="#e39157" size="3em" />
         </button>
 
         <Modal
@@ -173,15 +177,18 @@ const Soundboard = () => {
         </Modal>
 
         {/* Soundboard Content: Timer, Selected Songs, Sound Buttons */}
-        <div className="soundboard-content">
+       <div className="soundboard-content">
           {/* Timer Section */}
           <div className="timer-section">
-            <Timer
-              onPause={handleAudioPause}
-              onRestStart={handleAudioPause}
-              focusTime={focusTime}
-              breakTime={breakTime}
-            />
+          <Timer
+            onPause={handleAudioPause}
+            onResume={handleAudioResume}
+            onRestStart={handleAudioPause}
+            focusTime={focusTime}
+            breakTime={breakTime}
+            areAudiosPlaying={areAudiosPlaying}
+            setAreAudiosPlaying={setAreAudiosPlaying}
+          />
           </div>
 
           {/* Selected Songs Section */}
@@ -206,12 +213,19 @@ const Soundboard = () => {
           {/* Sound Buttons Section */}
           <div className="sound-buttons-section">
             <div className="sound-buttons">
-              <SoundButton soundSrc={selectedSound} label="Selected Sound" />
+              <SoundButton
+                soundSrc={selectedSound}
+                label="Selected Sound"
+                mainSongPlaying={mainSongPlaying}
+                setMainSongPlaying={setMainSongPlaying}
+              />
               {soundData.slice(3).map((sound) => (
                 <SoundButton
                   key={sound.id}
                   soundSrc={sound.soundSrc}
                   label={sound.label}
+                  mainSongPlaying={mainSongPlaying}
+                  setMainSongPlaying={setMainSongPlaying}
                 />
               ))}
             </div>
