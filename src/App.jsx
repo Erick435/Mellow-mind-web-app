@@ -5,13 +5,15 @@ import { auth } from './components/googleSignin/config'
 import { signOut } from '@firebase/auth';
 import './App.css';
 import TodoList from './components/todolist';
+
+
 function App() {
   //setting up login/registration (firebase)
   const [user, setUsers] = useState(null);
-  // const usersRef = collection(db, "users");
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
+
   const videoOptions = [
     { label: "Moonlight", path: "/moonlight.mp4" },
     { label: "Sunset", path: "/sunset.mp4" },
@@ -19,6 +21,8 @@ function App() {
     { label: "Nightsky", path: "/nightsky.mp4" },
     // ... more video paths
   ];
+
+
   //========== GOOGLE FIREBASE =================================== 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
@@ -57,9 +61,11 @@ function App() {
         console.error("Error Signing out ", error);
       })
   }
+
   if (!user) {
     return <SignIn handleLogin={handleLogin} />;
   }
+
   return (
     // Background Video
     <>
@@ -84,10 +90,14 @@ function App() {
        <div className="App" style={{ position: 'relative', zIndex: 0 }}>
         {/* <TodoList /> */}
         <Soundboard />
+
+        
         {/* Sidebar Toggle Button */}
         <button className={`sidebar-toggle ${!isSidebarVisible ? '' : 'hidden-bar'}`} onClick={toggleSidebar}>
           {isSidebarVisible ? '▶' : '◀' }
         </button>
+
+
         {/* Video Sidebar */}
         <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden-bar'}`}>
         <TodoList onTaskSelect={setSelectedTask} />
