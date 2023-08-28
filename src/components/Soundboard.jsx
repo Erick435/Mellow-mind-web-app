@@ -28,6 +28,7 @@ const soundData = [
 Modal.setAppElement("#root");
 
 const Soundboard = () => {
+
     const [selectedSound, setSelectedSound] = React.useState(soundData[0].soundSrc); // Default to the first sound
     const [selectedSoundIndex, setSelectedSoundIndex] = React.useState(0); // Default to the first sound index
     const [mainSongPlaying, setMainSongPlaying] = useState(false);
@@ -92,6 +93,7 @@ const Soundboard = () => {
 
         fade();
     }
+
 
     function fadeIn(audio, duration) {
         const startVolume = 0;
