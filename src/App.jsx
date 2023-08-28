@@ -86,7 +86,7 @@ function App() {
         <Soundboard />
         {/* Sidebar Toggle Button */}
         <button className={`sidebar-toggle ${!isSidebarVisible ? '' : 'hidden-bar'}`} onClick={toggleSidebar}>
-          {isSidebarVisible ? '◀' : '▶'}
+          {isSidebarVisible ? '▶' : '◀' }
         </button>
         {/* Video Sidebar */}
         <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden-bar'}`}>
