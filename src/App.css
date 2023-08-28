@@ -595,7 +595,7 @@ button[data-setter]:hover {
   margin: 20px;
 }
 
-.sidebar-left.hidden {
+.sidebar-left.hidden-bar {
   left: -300px; /* Width of the sidebar */
 }
 
@@ -618,7 +618,7 @@ button[data-setter]:hover {
 }
 
 /* This will move the button along with the sidebar when the sidebar is hidden */
-.sidebar-toggle.hidden {
+.sidebar-toggle.hidden-bar {
   left: 0px;
 }
 
