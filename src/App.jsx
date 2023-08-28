@@ -97,8 +97,8 @@ function App() {
 
       {/* New code to display the selected task */}
       {selectedTask !== null && (
-        <div className="selected-task-display" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
-          {selectedTask}
+        <div className="selected-task-display" style={{ position: 'absolute', top: '60%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
+          {selectedTask.text} {/* Access the text property */}
         </div>
       )}
 

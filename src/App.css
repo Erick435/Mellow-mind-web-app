@@ -683,7 +683,7 @@ button[data-setter]:hover {
   top: 350px;
   left: 10px;
   z-index: 1000;
-  max-height: 400px; /* Set the maximum height you want */
+  max-height: 230px; /* Set the maximum height you want */
   overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ccc;
   padding: 10px;
