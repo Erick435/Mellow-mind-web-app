@@ -113,7 +113,6 @@ const Timer = ({onPause, onRestStart, focusTime = 25, breakTime = 5}) => {
             // Insert the colon to make it MM:SS format
             value = value.slice(0, 2) + ':' + value.slice(2);
 
-            setDisplayTime(value);
         }
     };
 
