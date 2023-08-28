@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const SoundButton = ({ soundSrc, label, mainSongPlaying, setMainSongPlaying }) => {
+const SoundButton = ({ soundSrc, label, }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const[mainSongPlaying, setMainSongPlaying] = useState(false);
+
   const audioRef = useRef(null);
 
   const handleButtonClick = () => {
