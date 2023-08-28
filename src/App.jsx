@@ -6,11 +6,14 @@ import { signOut } from '@firebase/auth';
 import './App.css';
 import TodoList from './components/todolist';
 
+
 function App() {
   //setting up login/registration (firebase)
   const [user, setUsers] = useState(null);
   // const usersRef = collection(db, "users");
 
+  //currentSong state
+  const [currentSong, setCurrentSong] = useState(null);
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
@@ -83,12 +86,27 @@ function App() {
   return (
     // Background Video
     <>
-      <div style={{ width: "100vw", height: "100vh", position: "absolute", top: 0, left: 0, zIndex: -1 }}>
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+        }}
+      >
         <video
           src={selectedVideo}
           width="100%"
           height="100%"
-          style={{ position: "absolute", top: 0, left: 0, objectFit: "cover", pointerEvents: "none" }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            objectFit: "cover",
+            pointerEvents: "none",
+          }}
           autoPlay
           muted
           loop
@@ -109,36 +127,52 @@ function App() {
         {/* Sidebar Toggle Button */}
         <button className={`sidebar-toggle ${isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
           {isSidebarVisible ? '◀' : '▶'}
+
         </button>
 
-
         {/* Video Sidebar */}
-        <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
-        <TodoList onTaskSelect={setSelectedTask} />
-          <div>
-            <i className='video-option-head'>Backgrounds<br />-</i>
-            {videoOptions.map(video => (
-              <div
-                key={video.path}
-                className="video-option"
-                onClick={() => setSelectedVideo(video.path)}
-              >
-                {video.label}
-              </div>
-            ))}
-          </div>
-          {user && (
-            <div className="logout-link-container" >
-              <div className="logout-link" onClick={handleLogout}>
-                Logout
-              </div>
+
+        <div className={`sidebar-left ${isSidebarVisible ? "" : "hidden"}`}>
+          <i className="video-option-head">
+            Backgrounds
+            <br />-
+          </i>
+          {videoOptions.map((video) => (
+            <div
+              key={video.path}
+              className="video-option"
+              onClick={() => setSelectedVideo(video.path)}
+            >
+              {video.label}
             </div>
-          )}
+          ))}
+
+//         <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
+//         <TodoList onTaskSelect={setSelectedTask} />
+//           <div>
+//             <i className='video-option-head'>Backgrounds<br />-</i>
+//             {videoOptions.map(video => (
+//               <div
+//                 key={video.path}
+//                 className="video-option"
+//                 onClick={() => setSelectedVideo(video.path)}
+//               >
+//                 {video.label}
+//               </div>
+//             ))}
+//           </div>
+//           {user && (
+//             <div className="logout-link-container" >
+//               <div className="logout-link" onClick={handleLogout}>
+//                 Logout
+//               </div>
+//             </div>
+//           )}
+
         </div>
       </div>
     </>
   );
-
 }
 
 export default App;
