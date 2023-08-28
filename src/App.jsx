@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import Soundboard from "./components/Soundboard";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import Soundboard from './components/Soundboard';
+import SignIn from './components/googleSignin/SignIn'; //this is correct even if it's highlighting red
+import { auth } from './components/googleSignin/config'
+import { signOut } from '@firebase/auth';
+import './App.css';
+import TodoList from './components/todolist';
+
 
 function App() {
-  const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
+  //setting up login/registration (firebase)
+  const [user, setUsers] = useState(null);
+  // const usersRef = collection(db, "users");
 
   //currentSong state
   const [currentSong, setCurrentSong] = useState(null);
+  const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
+  const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
+  const [selectedTask, setSelectedTask] = useState(null);
 
-  const [selectedVideo, setSelectedVideo] = React.useState(
-    "/path/to/default/video.mp4"
-  ); // default video path
 
   const videoOptions = [
     { label: "Moonlight", path: "/moonlight.mp4" },
@@ -21,9 +28,60 @@ function App() {
     // ... more video paths
   ];
 
+  //========== GOOGLE FIREBASE =================================== 
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      setUsers(userAuth);
+    });
+
+    //Cleanup listener on component unmount
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   const getUsers = async() => {
+  //     const data = await getDocs(usersRef);
+  //     console.log(data);
+  //     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+  //   }
+  //   getUsers()
+  // }, [])
+
+
+
+
   const toggleSidebar = () => {
     setSidebarVisibility(!isSidebarVisible);
   };
+
+  //=============== HANDLING LOGIN AND LOGOUT FUNCTIONS FOR FIREBASE =========
+
+  const handleLogin = (loggedInUser) => {
+    setUsers(loggedInUser);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+    signOut(auth)
+      .then(() => {
+        setUsers(null);  // reset the user state
+      })
+      .catch((error) => {
+        console.error("Error Signing out ", error);
+      })
+  }
+
+  if (!user) {
+    return <SignIn handleLogin={handleLogin} />;
+  }
+
+
 
   return (
     // Background Video
@@ -55,18 +113,25 @@ function App() {
         ></video>
       </div>
 
-      <div className="App" style={{ position: "relative", zIndex: 0 }}>
+      {/* New code to display the selected task */}
+      {selectedTask !== null && (
+        <div className="selected-task-display" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
+          {selectedTask}
+        </div>
+      )}
+
+      <div className="App" style={{ position: 'relative', zIndex: 0 }}>
+        {/* <TodoList /> */}
         <Soundboard />
 
         {/* Sidebar Toggle Button */}
-        <button
-          className={`sidebar-toggle ${isSidebarVisible ? "" : "hidden"}`}
-          onClick={toggleSidebar}
-        >
-          {isSidebarVisible ? "◀" : "▶"}
+        <button className={`sidebar-toggle ${isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
+          {isSidebarVisible ? '◀' : '▶'}
+
         </button>
 
         {/* Video Sidebar */}
+
         <div className={`sidebar-left ${isSidebarVisible ? "" : "hidden"}`}>
           <i className="video-option-head">
             Backgrounds
@@ -81,6 +146,29 @@ function App() {
               {video.label}
             </div>
           ))}
+
+//         <div className={`sidebar-left ${isSidebarVisible ? '' : 'hidden'}`}>
+//         <TodoList onTaskSelect={setSelectedTask} />
+//           <div>
+//             <i className='video-option-head'>Backgrounds<br />-</i>
+//             {videoOptions.map(video => (
+//               <div
+//                 key={video.path}
+//                 className="video-option"
+//                 onClick={() => setSelectedVideo(video.path)}
+//               >
+//                 {video.label}
+//               </div>
+//             ))}
+//           </div>
+//           {user && (
+//             <div className="logout-link-container" >
+//               <div className="logout-link" onClick={handleLogout}>
+//                 Logout
+//               </div>
+//             </div>
+//           )}
+
         </div>
       </div>
     </>

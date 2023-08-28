@@ -54,8 +54,7 @@ const SoundButton = ({ soundSrc, label }) => {
         onChange={handleVolumeChange}
       />
       <audio ref={audioRef} src={soundSrc} loop />
-      {/* <source src={soundSrc} type="audio/mpeg" />
-            </audio> */}
+      {/* <source src={soundSrc} type="audio/mpeg" /> </audio> */}
     </div>
   );
 };

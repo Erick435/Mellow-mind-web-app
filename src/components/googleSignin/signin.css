@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* ------------------------------- LANDING PAGE CONTAINER ---------------------- */
+.landingPageContainer{
+    background-color: white;
+    margin: 0px;
+    font-family: Arial, sans-serif;
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This will take the full viewport height */
+}
+
+/* ============================================================================= */
+
+/* ---------------------------- NAVBAR MELLOWMIND ------------------------------- */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.title-container {
+    display: flex;
+    align-items: center; /* To vertically center the image and title */
+    gap: 10px; /* Space between the image and title */
+}
+
+
+img{
+    width:auto;
+    height:100px;
+}
+
+/* ============================================================================= */
+
+
+/* ------------------------------- SIGN IN BUTTON STYLES -------------------------------- */
+
+.signin-link {
+    position: relative;
+    display: inline-block;
+    padding: 20px 35px;
+    /* margin: 0px 0; */
+    color: #03e9f4;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 2px;
+    overflow: hidden;
+    margin-right: 25px;
+    border: 2px solid black;
+    box-shadow: 3px 3px 3px black;
+}
+
+.signin-link:hover {
+    background: #03e9f4;
+    color: black;
+    box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+        0 0 200px #03e9f4;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+    cursor: pointer;
+}
+
+.signin-link span {
+    position: absolute;
+    display: block;
+}
+
+.signin-link span:nth-child(1),
+.signin-link span:nth-child(2),
+.signin-link span:nth-child(3),
+.signin-link span:nth-child(4) {
+    background: linear-gradient(90deg, transparent, black);
+}
+/* ================================================================================ */
+
+
+/* ------------------------------- CAROUSEL IMAGES----------------------------- */
+
+.carousel-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carousel-container img {
+    width: auto;
+    display: block;
+    height: 300px;
+}
+
+/* Navigation dots in the carousel images */
+.carousel-dots {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    background: #ddd;
+    border: none;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background: #555;  /* Change to desired active color */
+}
+
+/* ================================================================== */

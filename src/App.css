@@ -133,6 +133,7 @@ h1 {
   width: 100%;
 }
 
+
 /* live clock */
 .clock-section {
   align-items: center;
@@ -294,7 +295,7 @@ a span:nth-child(4) {
 }
 
 .round-button {
-  border-radius: 50%;
+  border-radius: 10%;
   width: 100px;
   height: 100px;
   border: none;
@@ -309,6 +310,24 @@ a span:nth-child(4) {
 
 .round-button:hover {
   background-color: #d47b3e; /* Darker shade for hover effect */
+}
+
+.toggle-soundboard {
+  padding: 8px 16px;  /* Adjust as needed */
+  background-color: #e39157;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Optional: adds a smooth color transition */
+  width: 100px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10%;
+}
+
+.toggle-soundboard:hover {
+  background-color: #ff9933;  /* A slightly different shade of orange */
 }
 
 .sound-buttons {
@@ -532,8 +551,9 @@ button[data-setter]:hover {
   height: 4rem;
 }
 
-/* App.css */
+/* =============================== EVERYTHING THAT HAS TO DO WITH THE SIDEBAR ========================== */
 
+/* App.css */
 .sidebar-left {
   position: fixed; /* Change from absolute to fixed */
   left: 0;
@@ -602,6 +622,231 @@ button[data-setter]:hover {
   left: 0px;
 }
 
+
+
+ /* ---------------------------------------------- todo list ------------------------------ */
+ .todo-list .tasks-button {
+  position: absolute; /* Change to absolute */
+  top: 300px; /* Position from the top */
+  left: 15px; /* Adjust this to match your sidebar's position */
+  z-index: 1001; /* Ensure the button appears above the sidebar */
+  width: 250px; /* Making the button wider */
+  height: 40px; /* Adjusting the height */
+  border-radius: 20px; /* Making the button rounder */
+  text-align: center; /* Centering the text inside the button */
+  line-height: 40px; /* Aligning the text vertically */
+}
+
+
+.todo-list .popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  width: 600px;
+  height: 300px;
+  height: auto;
+}
+
+/* You might need to tweak these styles to fit your app's theme */
+.todo-list button {
+  margin: 5px;
+}
+
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between; /* Aligns content on the left and right */
+  align-items: center; /* Centers items vertically */
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.todo-list .delete-button {
+  background: none; /* Remove any default background */
+  border: none; /* Remove any default border */
+  font-size: 18px; /* Adjust size of trash can symbol */
+  color: red; /* You can set a color for the trash can symbol */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+
+.todo-list .tasks-border {
+  position: absolute;
+  top: 350px;
+  left: 10px;
+  z-index: 1000;
+  max-height: 400px; /* Set the maximum height you want */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 280px;
+  color: white;
+}
+
+
+
+.todo-list .popup-title {
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: bold; /* Make the title bold */
+  text-align: center; /* Center the title */
+  margin: 10px 0; /* Add some margin around the title */
+  top: -10px;
+}
+
+
+.todo-list button {
+  margin: 5px;
+}
+
+.todo-list .task-input {
+  width: 100%; /* Make the input span the whole width */
+  height: 30px;
+  border: 1px solid #ccc; /* Add a border to match the popup */
+  padding: 5px; /* Add some padding for better appearance */
+}
+
+.todo-list .popup-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-list .add-button {
+
+  padding: 5px;
+  text-align: center; /* Centering the "+" symbol */
+}
+
+.todo-list .cancel-button {
+  text-align: center; /* Centering the "+" symbol */
+  padding: 5px;
+}
+
+
+.border-title {
+    text-align: center; /* Centering the "+" symbol */
+}
+
+.todo-list .task-row {
+  display: flex;
+  align-items: flex-start; /* Align to the top */
+  padding: 5px;
+  flex-wrap: nowrap; /* Ensures flex items stay on a single line */
+}
+
+.todo-list .task-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+  margin-right: 10px;
+  flex-shrink: 0; /* Prevents shrinking */
+}
+
+.todo-list .task-content {
+  color: white;
+  word-wrap: break-word; /* Break long words to the next line */
+  overflow-wrap: break-word;
+  flex-grow: 1; /* Allows the text to take remaining space */
+  max-width: calc(100% - 30px); /* Limits the width, considering the circle and margin */
+}
+
+
+.todo-list .task-circle.selected {
+  background-color: #007bff; /* You can change this to any color you like */
+}
+
+.selected-task-display {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px; /* Adjust as needed */
+  font-weight: bold;
+  color: white; /* Adjust the color as needed */
+  text-align: center; /* Ensure the text is centered horizontally */
+
+}
+
+
+.tasks-border {
+  position: relative;
+}
+
+.task-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-content-wrapper {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 30px); /* Adjust based on the size of the delete icon */
+  flex-wrap: wrap;
+}
+
+.task-delete {
+  color: #F44336;
+  cursor: pointer;
+  width: 20px; /* Adjust based on the size of the delete icon */
+  text-align: right;
+  /* You can customize the color, size, etc. as needed */
+}
+/* ---------------------------------- LOGOUT/SIGNIN BUTTON STYLE -------------------------------- */
+/* Logout Link Styles */
+
+.logout-link-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.logout-link {
+  position: relative;
+  display: inline-block;
+  padding: 20px 35px;
+  /* margin: 40px 0; */
+  color: red;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  letter-spacing: 2px;
+  overflow: hidden;
+  margin-right: 50px;
+  margin-bottom: 45px;
+}
+
+.logout-link:hover {
+  background: red;
+  color: black;
+  box-shadow: 0 0 5px red, 0 0 25px red, 0 0 50px red, 0 0 200px red;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+  cursor: pointer;
+}
+
+/* Reusing the animation styles for the logout link */
+.logout-link span {
+  position: absolute;
+  display: block;
+}
+
+.logout-link span:nth-child(1),
+.logout-link span:nth-child(2),
+.logout-link span:nth-child(3),
+.logout-link span:nth-child(4) {
+  background: linear-gradient(90deg, transparent, black);
+}
+
+/* =============================================================================== */
+
 .settings-modal {
   position: absolute;
   top: 50%;
@@ -636,6 +881,7 @@ button[data-setter]:hover {
   cursor: pointer;
 }
 
+
 .collapsed .toggle-controls-btn {
   position: absolute;
   bottom: 0;
@@ -649,3 +895,4 @@ button[data-setter]:hover {
 .transition-all {
   transition: all 0.3s ease;
 }
+
