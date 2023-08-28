@@ -616,13 +616,14 @@ button[data-setter]:hover {
   z-index: 3;
 }
 
-
 /* This will move the button along with the sidebar when the sidebar is hidden */
-.sidebar-toggle.hidden {
+.sidebar-toggle.hidden-bar {
   left: 0px;
 }
 
-
+.sidebar-left.hidden-bar {
+  left:-300px;
+}
 
  /* ---------------------------------------------- todo list ------------------------------ */
 .todo-list .tasks-button {

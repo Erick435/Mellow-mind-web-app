@@ -43,9 +43,11 @@ function App() {
   //   }
   //   getUsers()
   // }, [])
+
   const toggleSidebar = () => {
     setSidebarVisibility(!isSidebarVisible);
   };
+
   //=============== HANDLING LOGIN AND LOGOUT FUNCTIONS FOR FIREBASE =========
   const handleLogin = (loggedInUser) => {
     setUsers(loggedInUser);
