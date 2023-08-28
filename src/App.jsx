@@ -5,33 +5,25 @@ import { auth } from './components/googleSignin/config'
 import { signOut } from '@firebase/auth';
 import './App.css';
 import TodoList from './components/todolist';
-
 function App() {
   //setting up login/registration (firebase)
   const [user, setUsers] = useState(null);
   // const usersRef = collection(db, "users");
-
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
-
-
   const videoOptions = [
     { label: "Moonlight", path: "/moonlight.mp4" },
     { label: "Sunset", path: "/sunset.mp4" },
     { label: "Resting Fire", path: "/resting-fire.mp4" },
     { label: "Nightsky", path: "/nightsky.mp4" },
-
     // ... more video paths
   ];
-
   //========== GOOGLE FIREBASE =================================== 
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       setUsers(userAuth);
     });
-
     //Cleanup listener on component unmount
     return () => {
       if (unsubscribe) {
@@ -39,7 +31,6 @@ function App() {
       }
     }
   }, []);
-
   // useEffect(() => {
   //   const getUsers = async() => {
   //     const data = await getDocs(usersRef);
@@ -48,20 +39,13 @@ function App() {
   //   }
   //   getUsers()
   // }, [])
-
-
-
-
   const toggleSidebar = () => {
     setSidebarVisibility(!isSidebarVisible);
   };
-
   //=============== HANDLING LOGIN AND LOGOUT FUNCTIONS FOR FIREBASE =========
-
   const handleLogin = (loggedInUser) => {
     setUsers(loggedInUser);
   };
-
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
@@ -73,13 +57,9 @@ function App() {
         console.error("Error Signing out ", error);
       })
   }
-
   if (!user) {
     return <SignIn handleLogin={handleLogin} />;
   }
-
-
-
   return (
     // Background Video
     <>
@@ -97,23 +77,19 @@ function App() {
 
       {/* New code to display the selected task */}
       {selectedTask !== null && (
-        <div className="selected-task-display" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
-          {selectedTask}
+        <div className="selected-task-display" style={{ position: 'absolute', top: '60%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
+          {selectedTask.text} {/* Access the text property */}
         </div>
       )}
-
-      <div className="App" style={{ position: 'relative', zIndex: 0 }}>
+       <div className="App" style={{ position: 'relative', zIndex: 0 }}>
         {/* <TodoList /> */}
         <Soundboard />
-
         {/* Sidebar Toggle Button */}
-        <button className={`sidebar-toggle ${!isSidebarVisible ? '' : 'hidden'}`} onClick={toggleSidebar}>
-          {isSidebarVisible ?'▶' : '◀' }
+        <button className={`sidebar-toggle ${!isSidebarVisible ? '' : 'hidden-bar'}`} onClick={toggleSidebar}>
+          {isSidebarVisible ? '▶' : '◀' }
         </button>
-
-
         {/* Video Sidebar */}
-        <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden'}`}>
+        <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden-bar'}`}>
         <TodoList onTaskSelect={setSelectedTask} />
           <div>
             <i className='video-option-head'>Backgrounds<br />-</i>
@@ -138,7 +114,5 @@ function App() {
       </div>
     </>
   );
-
 }
-
 export default App;

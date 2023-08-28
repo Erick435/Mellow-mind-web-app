@@ -37,14 +37,14 @@
   src: local("MoonBold"), url("./fonts/Moon2.0-Bold.otf") format("opentype");
 }
 @font-face {
-  font-family: 'RadioLandSlim';
-  src: local('RadioLandSlim'), url('./fonts/RADIOLANDSLIM.ttf') format('truetype');
+  font-family: "RadioLandSlim";
+  src: local("RadioLandSlim"),
+    url("./fonts/RADIOLANDSLIM.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'RadioLand';
-  src: local('RadioLand'), url('./fonts/RADIOLAND.TTF') format('truetype');
+  font-family: "RadioLand";
+  src: local("RadioLand"), url("./fonts/RADIOLAND.TTF") format("truetype");
 }
-
 
 /* STYLE */
 body {
@@ -100,12 +100,13 @@ h1 {
   align-items: center;
   background-color: transparent;
   color: white;
+  overflow: hidden;
 }
 
 .soundboard {
   text-align: center;
   position: relative;
-  background-color:rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   margin: 5rem;
   padding: 10px;
   border: 2px solid #ffffff; /* Fall theme color - you can choose your desired color */
@@ -134,19 +135,19 @@ h1 {
 
 
 /* live clock */
-.clock-section{
+.clock-section {
   align-items: center;
   margin-bottom: 0.5rem;
 }
-.live-timer{
-  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0, 0.4));
+.live-timer {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
   width: 8rem;
   border-radius: 20%;
   border: 2px solid #d47b3e;
   align-self: center;
-  margin: 0 auto
+  margin: 0 auto;
 }
-.digital-clock{
+.digital-clock {
   font-family: RadioLand;
   font-size: 2rem;
 }
@@ -515,7 +516,6 @@ button[data-setter]:hover {
 
 .message {
   animation: pulsate 5s infinite;
-  margin: 5px;
   font-size: larger;
 }
 
@@ -567,10 +567,9 @@ button[data-setter]:hover {
   align-items: flex-start;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;  /* For scrolling if the list is long */
-  transition: left 0.7s;  /* Add transition for smooth animation */
+  overflow-y: auto; /* For scrolling if the list is long */
+  transition: left 0.7s; /* Add transition for smooth animation */
 }
-
 
 /* BACKGROUND CHANGE FOR VIDEOS */
 
@@ -596,7 +595,7 @@ button[data-setter]:hover {
   margin: 20px;
 }
 
-.sidebar-left.hidden {
+.sidebar-left.hidden-bar {
   left: -300px; /* Width of the sidebar */
 }
 
@@ -618,9 +617,8 @@ button[data-setter]:hover {
   z-index: 3;
 }
 
-
 /* This will move the button along with the sidebar when the sidebar is hidden */
-.sidebar-toggle.hidden {
+.sidebar-toggle.hidden-bar {
   left: 0px;
 }
 
@@ -683,7 +681,7 @@ button[data-setter]:hover {
   top: 350px;
   left: 10px;
   z-index: 1000;
-  max-height: 400px; /* Set the maximum height you want */
+  max-height: 230px; /* Set the maximum height you want */
   overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ccc;
   padding: 10px;
@@ -854,12 +852,12 @@ button[data-setter]:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%; 
-  max-width: 500px; 
-  background-color: #fff; 
+  width: 80%;
+  max-width: 500px;
+  background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  z-index: 1001; 
+  z-index: 1001;
 }
 
 .settings-modal-overlay {
@@ -868,20 +866,33 @@ button[data-setter]:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); 
-  z-index: 1000; 
-
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
 }
 
 .settings-form {
   display: flex;
   flex-direction: column;
-
 }
 
 .settings-btn {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+
+.collapsed .toggle-controls-btn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+}
+
+.hidden {
+  display: none;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
 }
 
