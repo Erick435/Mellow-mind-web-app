@@ -1,29 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import 'font-awesome/css/font-awesome.min.css';
+import React, { useState, useEffect, useRef } from "react";
+import "font-awesome/css/font-awesome.min.css";
 
 
-const Timer = ({onPause, onRestStart, onResume}) => {
-    const [wholeTime, setWholeTime] = useState(25 * 60);
-    const [timeLeft, setTimeLeft] = useState(wholeTime);
+const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundboard }) => {
+    const focusTimeInSeconds = focusTime * 60;
+    const [wholeTime, setWholeTime] = useState(focusTimeInSeconds);
+    const [timeLeft, setTimeLeft] = useState(focusTimeInSeconds);
     const [isPaused, setIsPaused] = useState(true);
     const [isStarted, setIsStarted] = useState(false);
-    const [timerType, setTimerType] = useState('main'); // 'main' for main timer, 'additional' for 20% timer
-    const [isMainTimer, setIsMainTimer] = useState(true);  // true for main, false for additional
-
-
+    const [timerType, setTimerType] = useState("main"); // 'main' for main timer, 'additional' for 20% timer
+    const [isMainTimer, setIsMainTimer] = useState(true); // true for main, false for additional
 
     const intervalRef = useRef(null);
 
     const progressBarRef = useRef(null);
     const pointerRef = useRef(null);
 
-    const resetTimer = () => {
-        setWholeTime(25 * 60);
-        setTimeLeft(25 * 60);
+    const resetTimer = (isForFocus = true) => {
+        const newTime = isForFocus ? focusTime * 60 : breakTime * 60;
+        setWholeTime(newTime);
+        setTimeLeft(newTime);
         setIsStarted(false);
-        setIsMainTimer(true); // ensure main timer will start next
+        setIsMainTimer(isForFocus); // ensure main timer will start next
     };
-    
 
     useEffect(() => {
         if (!isStarted) return;
@@ -38,57 +37,32 @@ const Timer = ({onPause, onRestStart, onResume}) => {
 
                         if (isMainTimer) {
                             setIsMainTimer(false);
-                            onRestStart();  // Call the onRestStart callback when the rest timer starts
-                            const newTime = Math.round(wholeTime * 0.2);
-                            return newTime;
+                            onRestStart();
+                            resetTimer(false); // Set up for the rest timer
+                            setIsStarted(true); // Restart the timer
+                            return breakTime * 60; // Use the breakTime prop for rest
                         } else {
                             setIsMainTimer(true);
-                            return wholeTime;
+                            resetTimer(true); // Set up for the main timer
+                            setIsStarted(true); // Restart the timer
+                            return focusTimeInSeconds; // Use the focusTimeInSeconds for main
                         }
                     }
                     return prevTime - 1;
                 });
             }, 1000);
         }
-
         return () => clearInterval(intervalRef.current);
-    }, [isPaused, isStarted, wholeTime, isMainTimer, onRestStart]); // Add onRestStart to the dependency array
-
-
-
-    const handleSetterClick = (setterType) => {
-        if (!isStarted) {
-            let timeAdjustment;
-
-            switch (setterType) {
-                case 'minutes-plus':
-                    timeAdjustment = 60;
-                    break;
-                case 'minutes-minus':
-                    timeAdjustment = -60;
-                    break;
-                case 'seconds-plus':
-                    timeAdjustment = 1;
-                    break;
-                case 'seconds-minus':
-                    timeAdjustment = -1;
-                    break;
-                default:
-                    timeAdjustment = 0;
-            }
-            
-        console.log(displayTime)
-            const newTime = Math.max(wholeTime + timeAdjustment, 0);
-            setWholeTime(newTime);
-            setTimeLeft(newTime);
-            setIsMainTimer(true); // reset back to the main timer
-        }
-    };
+    }, [
+        isPaused, isStarted, wholeTime, isMainTimer, onRestStart, breakTime, focusTimeInSeconds]);
+    useEffect(() => {
+        resetTimer();
+    }, [focusTime, breakTime]);
 
     const togglePause = () => {
         // console.log("Toggling pause", { isStarted, isPaused });
-        if (timerType === 'additional' && isPaused && !isStarted) {
-            setTimerType('main');
+        if (timerType === "additional" && isPaused && !isStarted) {
+            setTimerType("main");
             setTimeLeft(wholeTime);
         } else if (!isStarted) {
             setIsStarted(true);
@@ -104,7 +78,6 @@ const Timer = ({onPause, onRestStart, onResume}) => {
             });
         }
     };
-    
 
 
     useEffect(() => {
@@ -112,37 +85,30 @@ const Timer = ({onPause, onRestStart, onResume}) => {
         progressBarRef.current.style.strokeDasharray = length;
 
         const updatePointer = (value) => {
-            const offset = -length - (length * value / wholeTime);
+            const offset = -length - (length * value) / wholeTime;
             progressBarRef.current.style.strokeDashoffset = offset;
-            pointerRef.current.style.transform = `rotate(${360 * value / wholeTime}deg)`;
+            pointerRef.current.style.transform = `rotate(${(360 * value) / wholeTime} deg)`;
         };
 
         updatePointer(timeLeft);
     }, [timeLeft, wholeTime]);
 
-    const displayTime = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+    const displayTime = `${Math.floor(timeLeft / 60).toString().padStart(2, "0")}:${(timeLeft % 60).toString().padStart(2, "0")}`;
 
     return (
         <div>
             <div className="setters">
-                <div className={`message ${!isPaused ? "pulsing" : ""}`}>
+                <div className={`message mt-7 ${!isPaused ? "pulsing" : ""} ${!showSoundboard ? 'message-push-down' : ''}`}>
                     <b>{isMainTimer ? "Focus" : "Rest"}</b>
                 </div>
-                {!isStarted && ( 
-                    <>
-                <div className="minutes-set">
-                    <button classname="setter-button" data-setter="minutes-minus" onClick={() => handleSetterClick('minutes-minus')}>-</button>
-                    <button classname="setter-button" data-setter="minutes-plus" onClick={() => handleSetterClick('minutes-plus')}>+</button>
-                </div>
-                <div className="seconds-set">
-                    <button classname="setter-button" data-setter="seconds-minus" onClick={() => handleSetterClick('seconds-minus')}>-</button>
-                    <button classname="setter-button" data-setter="seconds-plus" onClick={() => handleSetterClick('seconds-plus')}>+</button>
-                </div>
-                    </>
-                )}
+
             </div>
             <div className="circle">
-                <svg width="300" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                    width="300"
+                    viewBox="0 0 220 220"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
                     <g transform="translate(110,110)">
                         <circle r="100" className="e-c-base" />
                         <g transform="rotate(-90)">
@@ -154,18 +120,22 @@ const Timer = ({onPause, onRestStart, onResume}) => {
                     </g>
                 </svg>
             </div>
-            <div className="controlls">
+            <div className={`controlls ${!showSoundboard ? 'controlls-push-down' : ''}`}>
                 <div className="display-remain-time">{displayTime}</div>
-                <button id="pause" className={isPaused ? 'play' : 'pause'} onClick={togglePause}></button>
-                {isPaused && displayTime !== '25:00' && ( // The button only appears when the timer is paused and not started
-    <button id="reset" className="reset-button" onClick={resetTimer}>
-    <i className="fa fa-refresh"></i>
-</button>
-)}
-
+                <button
+                    id="pause"
+                    className={isPaused ? "play" : "pause"}
+                    onClick={togglePause}
+                ></button>
+                {isPaused &&
+                    displayTime !== "25:00" && (
+                        <button id="reset" className="reset-button" onClick={resetTimer}>
+                            <i className="fa fa-refresh"></i>
+                        </button>
+                    )}
             </div>
+
         </div>
     );
 };
-
 export default Timer;
