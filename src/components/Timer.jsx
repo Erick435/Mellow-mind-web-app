@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "font-awesome/css/font-awesome.min.css";
 
 
-const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, }) => {
+const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundboard }) => {
     const focusTimeInSeconds = focusTime * 60;
     const [wholeTime, setWholeTime] = useState(focusTimeInSeconds);
     const [timeLeft, setTimeLeft] = useState(focusTimeInSeconds);
@@ -10,7 +10,7 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, }) => {
     const [isStarted, setIsStarted] = useState(false);
     const [timerType, setTimerType] = useState("main"); // 'main' for main timer, 'additional' for 20% timer
     const [isMainTimer, setIsMainTimer] = useState(true); // true for main, false for additional
-    
+
     const intervalRef = useRef(null);
 
     const progressBarRef = useRef(null);
@@ -94,13 +94,14 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, }) => {
     }, [timeLeft, wholeTime]);
 
     const displayTime = `${Math.floor(timeLeft / 60).toString().padStart(2, "0")}:${(timeLeft % 60).toString().padStart(2, "0")}`;
-    
+
     return (
         <div>
             <div className="setters">
-                <div className={`message mt-7 ${!isPaused ? "pulsing" : ""}`}>
+                <div className={`message mt-7 ${!isPaused ? "pulsing" : ""} ${!showSoundboard ? 'message-push-down' : ''}`}>
                     <b>{isMainTimer ? "Focus" : "Rest"}</b>
                 </div>
+
             </div>
             <div className="circle">
                 <svg
@@ -119,7 +120,7 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, }) => {
                     </g>
                 </svg>
             </div>
-            <div className="controlls">
+            <div className={`controlls ${!showSoundboard ? 'controlls-push-down' : ''}`}>
                 <div className="display-remain-time">{displayTime}</div>
                 <button
                     id="pause"
@@ -127,12 +128,13 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, }) => {
                     onClick={togglePause}
                 ></button>
                 {isPaused &&
-                    displayTime !== "25:00" && ( // The button only appears when the timer is paused and not started
+                    displayTime !== "25:00" && (
                         <button id="reset" className="reset-button" onClick={resetTimer}>
                             <i className="fa fa-refresh"></i>
                         </button>
                     )}
             </div>
+
         </div>
     );
 };

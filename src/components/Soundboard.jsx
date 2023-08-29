@@ -188,6 +188,7 @@ const Soundboard = () => {
                             onRestStart={handleAudioPause}
                             focusTime={focusTime}
                             breakTime={breakTime}
+                            showSoundboard={showSoundboard}
                         />
                     </div>
 
@@ -197,37 +198,33 @@ const Soundboard = () => {
                     </button>
 
                     {/* Selected Songs Section */}
-                    {showSoundboard && (
-                        <div className="selected-songs-section">
-                            <div className="selected-songs">
-                                {soundData.slice(0, 3).map((sound) => (
-                                    <a
-                                        key={sound.id}
-                                        href="#"
-                                        className={selectedSound === sound.soundSrc ? "active" : ""}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            setSelectedSound(sound.soundSrc);
-                                        }}
-                                    >
-                                        {sound.label}
-                                    </a>
-                                ))}
-                            </div>
+                    <div className={`selected-songs-section ${!showSoundboard ? 'push-down' : ''}`}>
+                        <div className="selected-songs">
+                            {soundData.slice(0, 3).map((sound) => (
+                                <a
+                                    key={sound.id}
+                                    href="#"
+                                    className={selectedSound === sound.soundSrc ? "active" : ""}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setSelectedSound(sound.soundSrc);
+                                    }}
+                                >
+                                    {sound.label}
+                                </a>
+                            ))}
                         </div>
-                    )}
+                    </div>
 
                     {/* Sound Buttons Section */}
-                    {showSoundboard && (
-                        <div className="sound-buttons-section">
-                            <div className="sound-buttons">
-                                <SoundButton soundSrc={selectedSound} label="Selected Sound" />
-                                {soundData.slice(3).map((sound) => (
-                                    <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} />
-                                ))}
-                            </div>
+                    <div className="sound-buttons-section">
+                        <div className="sound-buttons">
+                            <SoundButton soundSrc={selectedSound} label="Selected Sound" showSoundboard={showSoundboard} />
+                            {soundData.slice(3).map((sound) => (
+                                <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} showSoundboard={showSoundboard} />
+                            ))}
                         </div>
-                    )}
+                    </div>
 
 
                 </div>
