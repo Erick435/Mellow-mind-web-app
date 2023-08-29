@@ -428,6 +428,10 @@ button[data-setter]:hover {
   transform: translateX(-50%) translateY(-50%);
 }
 
+.controlls-push-down {
+  margin-top: 50px;
+}
+
 .display-remain-time {
   font-weight: 100;
   font-family: "Roboto";
@@ -517,6 +521,10 @@ button[data-setter]:hover {
   font-size: larger;
 }
 
+.message-push-down {
+  margin-top:60px;
+}
+
 /* ... your existing styles ... */
 
 .reset-button {
@@ -545,8 +553,18 @@ button[data-setter]:hover {
 .minutes-set,
 .seconds-set {
   width: 4rem;
-
   height: 4rem;
+}
+
+.minutes-set-pushdown, .seconds-set-pushdown {
+  margin-top: 60px;
+}
+
+/* ========== WHEN SOUNDBOARD IS CLOSED, THIS WILL ALIGN THE CONTENTS IN THE CIRLCE ITMER ========== */
+
+.push-down {
+  /* position: relative; */
+  margin-top:0px;
 }
 
 /* =============================== EVERYTHING THAT HAS TO DO WITH THE SIDEBAR ========================== */
@@ -938,7 +956,8 @@ button[data-setter]:hover {
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .transition-all {
