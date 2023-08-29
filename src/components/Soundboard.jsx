@@ -194,7 +194,9 @@ const Soundboard = () => {
 
                     {/* Toggle Soundboard Button */}
                     <button className="toggle-soundboard" onClick={toggleSoundboard}>
-                        {showSoundboard ? 'Hide Soundboard' : 'Show Soundboard'}
+                        <div className="toggle-soundboard-button">
+                            {showSoundboard ? 'Hide Soundboard' : 'Show Soundboard'}
+                        </div>
                     </button>
 
                     {/* Selected Songs Section */}
