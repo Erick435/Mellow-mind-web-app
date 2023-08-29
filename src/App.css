@@ -7,6 +7,12 @@
   box-sizing: border-box;
 }
 
+
+div {
+  font-family: Aquatico;
+  font-size: medium;
+}
+
 .App {
   position: relative;
   z-index: 1;
@@ -113,7 +119,7 @@ h1 {
   border-radius: 10px;
   /* background-color: transparent; */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 650px;
+  max-width: 800px;
   width: 100%;
 }
 
@@ -140,15 +146,16 @@ h1 {
   margin-bottom: 0.5rem;
 }
 .live-timer {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+  /* background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)); */
+  background-color: transparent;
   width: 8rem;
-  border-radius: 20%;
-  border: 2px solid #d47b3e;
+  border-radius: 15%;
+  border: 2px solid white;
   align-self: center;
   margin: 0 auto;
 }
 .digital-clock {
-  font-family: RadioLand;
+  font-family: Aquatico;
   font-size: 2rem;
 }
 
@@ -166,6 +173,9 @@ a {
   letter-spacing: 2px;
   overflow: hidden;
   margin-right: 50px;
+  font-family: Aquatico;
+  border: 2px solid white;
+  border-radius: 8%;
 }
 
 a:hover {
@@ -299,32 +309,33 @@ a span:nth-child(4) {
   width: 100px;
   height: 100px;
   border: none;
-  background-color: #e39157; /* Fall theme color - you can choose your desired color */
+  background-color: transparent; /* Fall theme color - you can choose your desired color */
   color: #ffffff;
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  border: 2px solid white;
 }
 
 .round-button:hover {
-  background-color: #d47b3e; /* Darker shade for hover effect */
+  background-color: #fefefe37; /* Darker shade for hover effect */
 }
 
 .toggle-soundboard {
   padding: 0px 0px;  /* Adjust as needed */
-  background-color: #e39157;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease; /* Optional: adds a smooth color transition */
-  width: 100px;
-  height: 50px;
+  width: 150px;
+  height: 60px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10%;
   background-color: transparent;  /* A slightly different shade of orange */
   border: 2px solid white;
+  border-radius: 12%;
 }
 
 
@@ -336,28 +347,12 @@ a span:nth-child(4) {
   margin-bottom: 20px;
 }
 
-.master-pause {
-  margin-top: 20px;
-  border-radius: 10%;
-  border: none;
-  background-color: #e39157;
-  width: 100px;
-  height: 50px;
-  color: white;
-  cursor: pointer;
-}
-
-.master-pause:hover {
-  background-color: #d47b3e;
-}
 
 input[type="range"] {
   /* Set the track color to the fall-themed color */
-  --track-color: #e39157;
   /* Set the thumb color to a slightly darker shade */
-  --thumb-color: #d47b3e;
   width: 100%;
-  background: transparent;
+  background-color: transparent;
 }
 
 input[type="range"]:focus {
@@ -369,7 +364,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   height: 10px;
   cursor: pointer;
   /* Use a small white outline */
-  border: 1px solid #ffffff;
+  border: 2px solid #ffffff;
   /* Set the track color to the fall-themed color */
   background: var(--track-color);
   border-radius: 5px;
@@ -383,7 +378,7 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: -5px;
   background: var(--thumb-color);
   border-radius: 50%;
-  border: 1px solid #ffffff;
+  border: 2px solid #ffffff;
   cursor: pointer;
 }
 
@@ -393,7 +388,6 @@ button[data-setter] {
   outline: none;
   background: transparent;
   border: none;
-  /* font-family: Aquatico; */
   font-weight: 300;
   font-size: 35px;
   width: 40px;
@@ -434,9 +428,9 @@ button[data-setter]:hover {
 
 .display-remain-time {
   font-weight: 100;
-  font-family: "Roboto";
-  font-size: 65px;
-  color: #e39157;
+  font-family: Aquatico;
+  font-size: 50px;
+  color: white;
   background: none;
   border: none;
   outline: none;
@@ -511,14 +505,13 @@ button[data-setter]:hover {
   position: absolute;
   left: 50%;
   z-index: 1;
-  transform: translateX(
-    -50%
-  ); /* Centers the elements horizontally with respect to the circle */
+  transform: translateX(-50%); /* Centers the elements horizontally with respect to the circle */
 }
 
 .message {
   animation: pulsate 5s infinite;
   font-size: larger;
+  font-family: Aquatico;
 }
 
 .message-push-down {
@@ -542,7 +535,7 @@ button[data-setter]:hover {
 }
 
 .reset-button .fa-refresh {
-  font-size: 24px; /* adjust the size as necessary */
+  font-size: 35px; /* adjust the size as necessary */
   color: #e39157; /* color as other buttons */
   position: absolute;
   top: 50%;
@@ -595,6 +588,7 @@ button[data-setter]:hover {
   cursor: pointer;
   margin-bottom: 10px;
   font-size: 20px; /* Increase font size */
+  font-family: Aquatico;
 }
 
 .video-option:hover {
@@ -607,6 +601,7 @@ button[data-setter]:hover {
   margin-bottom: 10px;
   font-size: 18px; /* Increase font size */
   text-align: center;
+  font-family: Aquatico;
 }
 .sound-select {
   margin: 20px;
@@ -658,7 +653,7 @@ button[data-setter]:hover {
   border: 1px solid white; /* Add this line to add a white border */  
   background: transparent;
   transition: background 0.3s, transform 0.3s;
-
+  font-family: Aquatico;
 }
 
 .todo-list .tasks-button:hover {
@@ -880,15 +875,14 @@ button[data-setter]:hover {
   bottom: 90px;
   display: inline-block;
   padding: 20px 35px;
-  /* margin: 40px 0; */
   color: red;
   text-decoration: none;
   text-transform: uppercase;
   transition: 0.5s;
   letter-spacing: 2px;
   overflow: hidden;
-  /* margin-right: 50px;
-  margin-bottom: 45px; */
+  border: 2px solid white;
+  border-radius: 10%;
 }
 
 .logout-link:hover {

@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+div {
+    font-family: Aquatico;
+}
+
 /* ------------------------------- LANDING PAGE CONTAINER ---------------------- */
 .landingPageContainer{
 
@@ -57,6 +61,10 @@ img{
     margin-right: 25px;
     border: 2px solid#03e9f4;
     box-shadow: 3px 3px 3px #03e9f4;
+}
+
+.signIn-button-google {
+    display: flex;
 }
 
 .signin-link:hover {
