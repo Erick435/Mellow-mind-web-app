@@ -13,6 +13,8 @@ function App() {
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
+  const [musicStatus, setMusicStatus] = useState("pause"); // assume "play" and "pause" states
+
 
   const videoOptions = [
     { label: "Moonlight", path: "/moonlight.mp4" },

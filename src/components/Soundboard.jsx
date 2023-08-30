@@ -7,6 +7,7 @@ import { FaGear } from "react-icons/fa6";
 import MasterControls from "./MasterControls";
 import { createPortal } from "react-dom";
 
+
 const soundData = [
     //Get music background
     { id: 1, soundSrc: "/Crescent-Moon.mp3", label: "Midnight-Vibe" },
@@ -36,6 +37,8 @@ const Soundboard = () => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [focusTime, setFocusTime] = React.useState(25); // default 25 mins
     const [breakTime, setBreakTime] = React.useState(5);
+    const [isMainTimer, setIsMainTimer] = useState(true);
+
 
     const handleMasterPause = () => {
         const audioElements = document.getElementsByTagName("audio");
@@ -45,6 +48,7 @@ const Soundboard = () => {
             }
         }
     };
+    
 
 
     const toggleSoundboard = () => {
@@ -56,25 +60,44 @@ const Soundboard = () => {
         setMainSongPlaying(false);
     }, [selectedSoundIndex]);
 
+    useEffect(() => {
+        const handlePauseMusic = () => {
+            handleAudioPause(true);  // force pause
+        };
+    
+        const handlePlayMusic = () => {
+            handleAudioResume();
+        };
+    
+        window.addEventListener('pauseMusic', handlePauseMusic);
+        window.addEventListener('playMusic', handlePlayMusic);
+    
+        return () => {
+            window.removeEventListener('pauseMusic', handlePauseMusic);
+            window.removeEventListener('playMusic', handlePlayMusic);
+        };
+    }, []);
 
-    const handleAudioPause = () => {
+
+    const handleAudioPause = (forcePause = false) => {
+        if (!forcePause && !isMainTimer) return;
+    
         const audioElements = document.getElementsByTagName("audio");
         for (let i = 0; i < audioElements.length; i++) {
             if (!audioElements[i].paused) {
-                fadeOut(audioElements[i], 2000); // Fade out over 2 seconds
+                fadeOut(audioElements[i], 2000);
             }
         }
-        for (let i = 0; i < audioElements.length; i++) {
-            let event = new Event("audioPaused");
-            audioElements[i].dispatchEvent(event);
-        }
+        setMainSongPlaying(false);
     };
-
+    
+    
     const handleAudioResume = () => {
         const audioElements = document.getElementsByTagName("audio");
         for (let i = 0; i < audioElements.length; i++) {
-            fadeIn(audioElements[i], 2000); // Fade in over 2 seconds
+            fadeIn(audioElements[i], 2000);
         }
+        setMainSongPlaying(true);
     };
 
     function fadeOut(audio, duration) {
@@ -183,13 +206,15 @@ const Soundboard = () => {
 
                     {/* Timer Section */}
                     <div className="timer-section">
-                        <Timer
-                            onPause={handleAudioPause}
-                            onRestStart={handleAudioPause}
-                            focusTime={focusTime}
-                            breakTime={breakTime}
-                            showSoundboard={showSoundboard}
-                        />
+                    <Timer
+                        onPause={handleAudioPause}
+                        onResume={handleAudioResume}
+                        onRestStart={() => handleAudioPause(true)} // Force pausing when the main "Focus" timer ends
+                        focusTime={focusTime}
+                        breakTime={breakTime}
+                        showSoundboard={showSoundboard}
+                    />
+
                     </div>
 
                     {/* Toggle Soundboard Button */}
