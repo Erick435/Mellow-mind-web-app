@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { FaFastForward, FaFastBackward } from "react-icons/fa";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
@@ -24,6 +24,24 @@ const MasterControls = ({
     audios[0].play();
     setMainSongPlaying(true);
   };
+  useEffect(() => {
+    // Pause music when focus timer ends
+    const handleFocusEnd = () => {
+        pauseSong();
+    };
+    // Play music when break timer ends
+    const handleBreakEnd = () => {
+        playSong();
+    };
+
+    window.addEventListener('onFocusEnd', handleFocusEnd);
+    window.addEventListener('onBreakEnd', handleBreakEnd);
+
+    return () => {
+        window.removeEventListener('onFocusEnd', handleFocusEnd);
+        window.removeEventListener('onBreakEnd', handleBreakEnd);
+    };
+}, []);
 
   return (
     <>
