@@ -13,7 +13,9 @@ function App() {
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
+  const [isFocusVisible, setFocusVisibility] = useState(false);
   const [musicStatus, setMusicStatus] = useState("pause"); // assume "play" and "pause" states
+
 
 
   const videoOptions = [
@@ -24,6 +26,20 @@ function App() {
     // ... more video paths
   ];
 
+  // ---------- FOCUS TASK TOGGLE VISIBILTY ---------------
+  const handleTaskSelect = (task) => {
+    setSelectedTask(task);
+    if (task) {
+      setFocusVisibility(true);// Show the focus-task-container when a task is selected
+    }
+    else {
+      setFocusVisibility(false); // Hide the focus-task-container when no task is selected
+    }
+  };
+
+  const toggleFocusVisibility = () => {
+    setFocusVisibility(!isFocusVisible)
+  }
 
   //========== GOOGLE FIREBASE =================================== 
   useEffect(() => {
@@ -37,14 +53,6 @@ function App() {
       }
     }
   }, []);
-  // useEffect(() => {
-  //   const getUsers = async() => {
-  //     const data = await getDocs(usersRef);
-  //     console.log(data);
-  //     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-  //   }
-  //   getUsers()
-  // }, [])
 
   const toggleSidebar = () => {
     setSidebarVisibility(!isSidebarVisible);
@@ -85,26 +93,27 @@ function App() {
         ></video>
       </div>
 
-      {/* New code to display the selected task */}
-      {selectedTask !== null && (
-        <div className="selected-task-display" style={{ position: 'absolute', top: '60%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
-          {selectedTask.text} {/* Access the text property */}
-        </div>
-      )}
-       <div className="App" style={{ position: 'relative', zIndex: 0 }}>
-        {/* <TodoList /> */}
+      <div className="App" style={{ position: 'relative', zIndex: 0 }}>
+
         <Soundboard />
 
+        {/* ----------------- SIDE BAR --------------------- */}
         
         {/* Sidebar Toggle Button */}
         <button className={`sidebar-toggle ${!isSidebarVisible ? '' : 'hidden-bar'}`} onClick={toggleSidebar}>
-          {isSidebarVisible ? '▶' : '◀' }
+          {isSidebarVisible ? '▶' : '◀'}
         </button>
 
+        {/* Show Focus Task Container */}
+        {isFocusVisible && (
+          <div className='focus-task-container'>
+            {selectedTask !== null ? selectedTask.text : <span style={{color: 'red', fontFamily:'aquatico'}}>Please select a focus task</span>}
+          </div>
+          )}
 
         {/* Video Sidebar */}
         <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden-bar'}`}>
-        <TodoList onTaskSelect={setSelectedTask} />
+          <TodoList onTaskSelect={handleTaskSelect} />
           <div>
             <i className='video-option-head'>Backgrounds<br />-</i>
             {videoOptions.map(video => (
@@ -116,7 +125,18 @@ function App() {
                 {video.label}
               </div>
             ))}
+
           </div>
+
+          {/* --------------- TOGGLE FOCUS SIDEBAR TASKS/TODO -------------- */}
+
+          {/* Toggle button for Focus task */}
+          <div className='focus-sidebar-container'>
+            <button className='toggle-focus-button' onClick={toggleFocusVisibility}>Toggle Focus Task</button>
+          </div>
+
+
+          {/* -------------- LOGOUT CONTAINER ------------------- */}
           {user && (
             <div className="logout-link-container" >
               <div className="logout-link" onClick={handleLogout}>
