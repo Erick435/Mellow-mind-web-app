@@ -58,7 +58,7 @@ function TodoList({ onTaskSelect }) {
     setNewTask('');
     handleClosePopup();
   };
-  
+
   const handleDeleteTask = (id) => {
     if (selectedTask === tasks.findIndex(task => task.id === id)) {
       setSelectedTask(null);
@@ -66,8 +66,8 @@ function TodoList({ onTaskSelect }) {
     }
     deleteTaskFromFirestore(id, userId); // Pass userId
   };
-  
-  
+
+
   useEffect(() => {
     if (isPopupVisible && inputRef.current) {
       inputRef.current.focus();
@@ -92,27 +92,27 @@ function TodoList({ onTaskSelect }) {
       console.error("Error deleting document: ", error);
     }
   };
-  
-  
 
-    // Fetch to-dos from Firestore
-    useEffect(() => {
-        if (userId) { // Make sure userId is available
-          const todosCollection = collection(db, 'users', userId, 'todos');
-          const q = query(todosCollection, orderBy("createdAt"));
-          const unsubscribe = onSnapshot(q, snapshot => {
-            setTasks(snapshot.docs.map(doc => ({ id: doc.id, text: doc.data().text })));
-          });
-          return () => unsubscribe();
-        }
-    }, [userId]); // Add userId as a dependency  
-      
-  
+
+
+  // Fetch to-dos from Firestore
+  useEffect(() => {
+    if (userId) { // Make sure userId is available
+      const todosCollection = collection(db, 'users', userId, 'todos');
+      const q = query(todosCollection, orderBy("createdAt"));
+      const unsubscribe = onSnapshot(q, snapshot => {
+        setTasks(snapshot.docs.map(doc => ({ id: doc.id, text: doc.data().text })));
+      });
+      return () => unsubscribe();
+    }
+  }, [userId]); // Add userId as a dependency  
+
+
 
   return (
     <div className="todo-list">
       <button className="tasks-button" onClick={handleOpenPopup}>Add Task</button>
-  
+
       {isPopupVisible && (
         <div className="popup-wrapper">
           <div ref={popupRef} className="popup">
@@ -133,8 +133,8 @@ function TodoList({ onTaskSelect }) {
           </div>
         </div>
       )}
-  
-    <div className="tasks-border">
+
+      <div className="tasks-border">
         <div className="border-title">
           <h3>Tasks</h3>
         </div>
@@ -142,9 +142,15 @@ function TodoList({ onTaskSelect }) {
           <div key={task.id} className="task-row">
             <div
               className={`task-circle ${selectedTask === index ? 'selected' : ''}`}
-              onClick={() => toggleTaskSelection(index)}
-            ></div>
-            <div className="task-content">{task.text}</div>
+              onClick={(e) => {
+                e.stopPropagation(); // Stop the event from propagating up to parent elements
+                toggleTaskSelection(index);
+              }}>
+            </div>
+
+            <div className="task-content" onClick={() => toggleTaskSelection(index)}>
+              {task.text}
+            </div>
             <div className="task-delete" onClick={() => handleDeleteTask(task.id)}>
               &#x1F5D1; {/* Trash can icon using HTML entity */}
             </div>
