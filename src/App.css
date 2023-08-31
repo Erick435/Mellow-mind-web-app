@@ -336,6 +336,7 @@ a span:nth-child(4) {
   background-color: transparent;  /* A slightly different shade of orange */
   border: 2px solid white;
   border-radius: 12%;
+  margin-top: 70px;
 }
 
 
@@ -429,13 +430,14 @@ button[data-setter]:hover {
 .display-remain-time {
   font-weight: 100;
   font-family: Aquatico;
-  font-size: 50px;
+  font-size: 60px;
   color: white;
   background: none;
   border: none;
   outline: none;
   text-align: center;
-  width: 150px; /* Adjust as needed */
+  margin-top: 50px;
+  width: 200px; /* Adjust as needed */
 }
 
 #pause {
@@ -480,13 +482,13 @@ button[data-setter]:hover {
 }
 .e-c-progress {
   fill: none;
-  stroke: #e39157;
+  stroke: white;
   stroke-width: 4px;
   transition: stroke-dashoffset 0.7s;
 }
 .e-c-pointer {
   fill: #fff;
-  stroke: #e39157;
+  stroke: white;
   stroke-width: 2px;
 }
 #e-pointer {
@@ -495,7 +497,7 @@ button[data-setter]:hover {
 
 .circle {
   position: relative; /* Makes the circle a reference for absolute positioning */
-  width: 300px; /* Adjust based on your SVG width or desired size */
+  width: 500px; /* Adjust based on your SVG width or desired size */
   margin: 0 auto; /* Centers the circle horizontally within its parent */
   z-index: 0;
 }
@@ -510,12 +512,12 @@ button[data-setter]:hover {
 
 .message {
   animation: pulsate 5s infinite;
-  font-size: larger;
+  font-size: 25px;
   font-family: Aquatico;
 }
 
 .message-push-down {
-  margin-top:60px;
+  margin-top: 60px;
 }
 
 /* ... your existing styles ... */
@@ -641,7 +643,7 @@ button[data-setter]:hover {
  /* ---------------------------------------------- todo list ------------------------------ */
 .todo-list .tasks-button {
   position: absolute; /* Change to absolute */
-  top: 300px; /* Position from the top */
+  top: 307px; /* Position from the top */
   left: 15px; /* Adjust this to match your sidebar's position */
   z-index: 1001; /* Ensure the button appears above the sidebar */
   width: 250px; /* Making the button wider */
@@ -708,12 +710,13 @@ button[data-setter]:hover {
   top: 350px;
   left: 10px;
   z-index: 1000;
-  max-height: 230px; /* Set the maximum height you want */
+  max-height: 175px; /* Set the maximum height you want */
   overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ccc;
   padding: 10px;
   width: 280px;
   color: white;
+  margin-top: 8px;
 }
 /* Scrollbar styles for WebKit browsers (Chrome, Safari, newer versions of Opera) */
 .todo-list .tasks-border::-webkit-scrollbar {
@@ -867,7 +870,8 @@ button[data-setter]:hover {
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  margin-top: 321px;
 }
 
 .logout-link {
@@ -940,6 +944,10 @@ button[data-setter]:hover {
   background: none;
   border: none;
   cursor: pointer;
+  position: absolute;
+  margin-top: 510px;
+  margin-left: -24px;
+  margin-right: auto;
 }
 
 
@@ -958,3 +966,17 @@ button[data-setter]:hover {
   transition: all 0.3s ease;
 }
 
+.logo-container {
+  display: flex;
+  align-items: center; /* To vertically align the logo and text in the middle */
+  gap: 5px; /* To provide some space between the logo and the text */
+  margin-left: -20px;
+  margin-top: -20px;
+}
+
+.logo-text {
+  margin: 0; /* To remove default margin of h1 */
+  font-size: 36px; /* Adjust the size as needed */
+  color: white;
+
+}
