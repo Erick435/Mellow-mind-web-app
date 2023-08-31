@@ -106,7 +106,7 @@ const Timer = ({ onPause, onResume, onFocusEnd, onBreakEnd, focusTime = 25, brea
             </div>
             <div className="circle">
                 <svg
-                    width="300"
+                    width="500"
                     viewBox="0 0 220 220"
                     xmlns="http://www.w3.org/2000/svg"
                 >

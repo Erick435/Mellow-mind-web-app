@@ -113,7 +113,12 @@ function App() {
 
         {/* Video Sidebar */}
         <div className={`sidebar-left ${!isSidebarVisible ? '' : 'hidden-bar'}`}>
-          <TodoList onTaskSelect={handleTaskSelect} />
+        <TodoList onTaskSelect={handleTaskSelect} />
+        <div className="logo-container">
+          <img src="/logo-trsprnt.png" alt="MellowMind Logo" />
+          <h1 className="logo-text">MellowMind</h1>
+        </div>
+
           <div>
             <i className='video-option-head'>Backgrounds<br />-</i>
             {videoOptions.map(video => (
