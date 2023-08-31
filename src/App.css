@@ -570,7 +570,7 @@ button[data-setter]:hover {
   left: 0;
   top: 0;
   height: 100%;
-  z-index: 3;
+  z-index: 2;
   width: 300px; /* Adjust as needed */
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
@@ -817,6 +817,7 @@ button[data-setter]:hover {
   overflow-wrap: break-word;
   flex-grow: 1; /* Allows the text to take remaining space */
   max-width: calc(100% - 60px); /* Adjusted considering the circle, margin, and delete button */
+  cursor: pointer;
 }
 
 
@@ -863,6 +864,42 @@ button[data-setter]:hover {
   flex-shrink: 0; /* Prevents shrinking */
   /* You can customize the color, size, etc. as needed */
 }
+
+.focus-task-container {
+  position: absolute;
+  left: 20px; /* Adjust this value to create space between the edge and the soundboard. */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1; /* Behind the sidebar */
+  border: 2px solid white;
+  padding: 10px; /* To give some space between the text and the border. */
+  max-width: calc(20% - 15px); /* 30% of the viewport width minus the left positioning and some buffer. Adjust as needed. */
+  word-wrap: break-word; /* Ensures longer texts wrap within the container. */
+  background-color: #00000066;
+  color:white;
+}
+
+.toggle-focus-button {
+  position: absolute; /* Change to absolute */
+  top: 255px; /* Position from the top */
+  left: 15px; /* Adjust this to match your sidebar's position */
+  z-index: 1001; /* Ensure the button appears above the sidebar */
+  width: 250px; /* Making the button wider */
+  height: 40px; /* Adjusting the height */
+  border-radius: 20px; /* Making the button rounder */
+  text-align: center; /* Centering the text inside the button */
+  line-height: 40px; /* Aligning the text vertically */
+  color: white;
+  border: 1px solid white; /* Add this line to add a white border */  
+  background: transparent;
+  transition: background 0.3s, transform 0.3s;
+  font-family: Aquatico;
+  margin: 5px;
+}
+
+
+
+
 /* ---------------------------------- LOGOUT/SIGNIN BUTTON STYLE -------------------------------- */
 /* Logout Link Styles */
 
