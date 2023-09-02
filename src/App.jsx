@@ -14,8 +14,6 @@ function App() {
   const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
   const [isFocusVisible, setFocusVisibility] = useState(false);
-  const [musicStatus, setMusicStatus] = useState("pause"); // assume "play" and "pause" states
-
 
 
   const videoOptions = [

@@ -10,8 +10,8 @@ import { createPortal } from "react-dom";
 
 const soundData = [
     //Get music background
-    { id: 1, soundSrc: "/Crescent-Moon.mp3", label: "Midnight-Vibe" },
-    { id: 2, soundSrc: "/Next-door.mp3", label: "Jam Session Next Door" },
+    { id: 1, soundSrc: "/Crescent-Moon.mp3", label: "Midnight Vibe" },
+    { id: 2, soundSrc: "/Next-door.mp3", label: "Jam Session" },
     { id: 3, soundSrc: "/Jazz.mp3", label: "Jazz" },
     //Get Background ambience
     { id: 4, soundSrc: "/forest.mp3", label: "Forest" },
@@ -30,25 +30,44 @@ Modal.setAppElement("#root");
 
 const Soundboard = () => {
 
-    const [selectedSound, setSelectedSound] = React.useState(soundData[0].soundSrc); // Default to the first sound
-    const [selectedSoundIndex, setSelectedSoundIndex] = React.useState(0); // Default to the first sound index
+    const [selectedSoundIndex, setSelectedSoundIndex] = React.useState(0);
+    const [selectedSound, setSelectedSound] = React.useState(soundData[selectedSoundIndex].soundSrc);
     const [mainSongPlaying, setMainSongPlaying] = useState(false);
     const [showSoundboard, setShowSoundboard] = React.useState(false);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [focusTime, setFocusTime] = React.useState(25); // default 25 mins
     const [breakTime, setBreakTime] = React.useState(5);
     const [isMainTimer, setIsMainTimer] = useState(true);
+    const [playingSounds, setPlayingSounds] = useState([soundData[0].soundSrc]); // The first sound is playing by default
 
+
+
+    const selectedSoundSources = soundData.slice(0, 3).map((sound) => sound.soundSrc); // Extract the sources of the selected songs
 
     const handleMasterPause = () => {
         const audioElements = document.getElementsByTagName("audio");
         for (let i = 0; i < audioElements.length; i++) {
-            if (!audioElements[i].paused) {
+            if (!audioElements[i].paused && selectedSoundSources.includes(audioElements[i].getAttribute('src'))) {
                 audioElements[i].pause();
             }
         }
+        const event = new Event('audioPausedProgrammatically');
+        window.dispatchEvent(event);
     };
-    
+
+
+    // Function to add or remove a sound from the playingSounds array
+    const togglePlayingSound = (soundSrc) => {
+        setPlayingSounds((prevPlayingSounds) => {
+            if (prevPlayingSounds.includes(soundSrc)) {
+                console.log("Removing:", soundSrc);  // Log for debugging
+                return prevPlayingSounds.filter((src) => src !== soundSrc);
+            } else {
+                console.log("Adding:", soundSrc);  // Log for debugging
+                return [...prevPlayingSounds, soundSrc];
+            }
+        });
+    };
 
 
     const toggleSoundboard = () => {
@@ -57,21 +76,37 @@ const Soundboard = () => {
 
     useEffect(() => {
         setSelectedSound(soundData[selectedSoundIndex].soundSrc);
-        setMainSongPlaying(false);
+        const audioElement = document.querySelector(`audio[src="${soundData[selectedSoundIndex].soundSrc}"]`);
+        if (audioElement) {
+            audioElement.play();
+        }
+        setMainSongPlaying(true);
+        // Reset playingSounds state when main song changes
+        setPlayingSounds([soundData[selectedSoundIndex].soundSrc]);
+    
     }, [selectedSoundIndex]);
+    
+
+
+    useEffect(() => {
+        if (!mainSongPlaying) {
+            setPlayingSounds([]);
+        }
+    }, [mainSongPlaying]);
+
 
     useEffect(() => {
         const handlePauseMusic = () => {
             handleAudioPause(true);  // force pause
         };
-    
+
         const handlePlayMusic = () => {
             handleAudioResume();
         };
-    
+
         window.addEventListener('pauseMusic', handlePauseMusic);
         window.addEventListener('playMusic', handlePlayMusic);
-    
+
         return () => {
             window.removeEventListener('pauseMusic', handlePauseMusic);
             window.removeEventListener('playMusic', handlePlayMusic);
@@ -81,7 +116,7 @@ const Soundboard = () => {
 
     const handleAudioPause = (forcePause = false) => {
         if (!forcePause && !isMainTimer) return;
-    
+
         const audioElements = document.getElementsByTagName("audio");
         for (let i = 0; i < audioElements.length; i++) {
             if (!audioElements[i].paused) {
@@ -90,8 +125,8 @@ const Soundboard = () => {
         }
         setMainSongPlaying(false);
     };
-    
-    
+
+
     const handleAudioResume = () => {
         const audioElements = document.getElementsByTagName("audio");
         for (let i = 0; i < audioElements.length; i++) {
@@ -144,21 +179,38 @@ const Soundboard = () => {
         setIsModalOpen(false);
     };
 
+    // ------ MASTER CONTROLS SWITCHING ONLY THE SONG AUDIO (NOT SOUND) ---------------
+
+    const selectedSounds = ["Midnight-Vibe", "Jam Session Next Door", "Jazz"];
+
+    const pauseAllAudiosExceptSelected = (selectedAudio) => {
+        const audioElements = document.getElementsByTagName("audio");
+        for (let i = 0; i < audioElements.length; i++) {
+            if (audioElements[i] !== selectedAudio) {
+                audioElements[i].pause();
+            }
+        }
+    };
+
     const prev = () => {
-        const total =
-            document.getElementsByClassName("selected-songs")[0].children.length;
+        handleMasterPause();
         setSelectedSoundIndex((prevIndex) =>
-            prevIndex !== 0 ? prevIndex - 1 : total - 1
-        ); // Wrap around if at the end
+            prevIndex !== 0 ? prevIndex - 1 : selectedSounds.length - 1
+        );
+        const audioElement = document.querySelector(`audio[src="${selectedSound}"]`);
+        pauseAllAudiosExceptSelected(audioElement);
     };
 
     const next = () => {
-        setSelectedSoundIndex(
-            (prevIndex) =>
-                (prevIndex + 1) %
-                document.getElementsByClassName("selected-songs")[0].children.length
-        ); // Wrap around if at the end
+        handleMasterPause();
+        setSelectedSoundIndex((prevIndex) =>
+            (prevIndex + 1) % selectedSounds.length
+        );
+        const audioElement = document.querySelector(`audio[src="${selectedSound}"]`);
+        pauseAllAudiosExceptSelected(audioElement);
     };
+
+
 
     return (
         <div className="soundboard-container">
@@ -206,15 +258,14 @@ const Soundboard = () => {
 
                     {/* Timer Section */}
                     <div className="timer-section">
-                    <Timer
-                        onPause={handleAudioPause}
-                        onResume={handleAudioResume}
-                        onRestStart={() => handleAudioPause(true)} // Force pausing when the main "Focus" timer ends
-                        focusTime={focusTime}
-                        breakTime={breakTime}
-                        showSoundboard={showSoundboard}
-                    />
-
+                        <Timer
+                            onPause={handleAudioPause}
+                            onResume={handleAudioResume}
+                            onRestStart={() => handleAudioPause(true)} // Force pausing when the main "Focus" timer ends
+                            focusTime={focusTime}
+                            breakTime={breakTime}
+                            showSoundboard={showSoundboard}
+                        />
                     </div>
 
                     {/* Toggle Soundboard Button */}
@@ -224,32 +275,23 @@ const Soundboard = () => {
                         </div>
                     </button>
 
-                    {/* Selected Songs Section */}
-                    <div className={`selected-songs-section ${!showSoundboard ? 'push-down' : ''}`}>
-                        <div className="selected-songs">
-                            {soundData.slice(0, 3).map((sound) => (
-                                <a
-                                    key={sound.id}
-                                    href="#"
-                                    className={selectedSound === sound.soundSrc ? "active" : ""}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setSelectedSound(sound.soundSrc);
-                                    }}
-                                >
-                                    {sound.label}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
 
                     {/* Sound Buttons Section */}
                     <div className="sound-buttons-section">
                         <div className="sound-buttons">
-                            <SoundButton soundSrc={selectedSound} label="Selected Sound" showSoundboard={showSoundboard} />
-                            {soundData.slice(3).map((sound) => (
-                                <SoundButton key={sound.id} soundSrc={sound.soundSrc} label={sound.label} showSoundboard={showSoundboard} />
+                            {soundData.map((sound) => (
+                                <SoundButton key={sound.id}
+                                    soundSrc={sound.soundSrc}
+                                    label={sound.label}
+                                    isSelected={selectedSound === sound.soundSrc}
+                                    showSoundboard={showSoundboard}
+                                    id={sound.id}
+                                    playingSounds={playingSounds}
+                                    isPlaying={playingSounds.includes(sound.soundSrc)} // Change this line
+                                    togglePlayingSound={togglePlayingSound} // Change this line
+                                />
                             ))}
+
                         </div>
                     </div>
 
@@ -262,6 +304,9 @@ const Soundboard = () => {
                         audios={document.getElementsByTagName("audio")}
                         mainSongPlaying={mainSongPlaying}
                         setMainSongPlaying={setMainSongPlaying}
+                        selectedSound={selectedSound}
+                        playingSounds={playingSounds}
+                        setPlayingSounds={setPlayingSounds}
                     />,
                     document.body
                 )}

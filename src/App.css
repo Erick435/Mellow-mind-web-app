@@ -139,6 +139,13 @@ h1 {
   width: 100%;
 }
 
+.sound-button.selected .round-button {
+  background-color: #03e9f4;
+  color: #050801;
+  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 200px #03e9f4;
+  margin-bottom: 15px;
+}
+
 
 /* live clock */
 .clock-section {
@@ -161,24 +168,25 @@ h1 {
 
 /* ---------------- SELECTED SONGS BUTTON CSS---------- */
 
-a {
+.sound-button .round-button {
   position: relative;
   display: inline-block;
-  padding: 30px 35px;
-  margin: 40px 0;
+  margin: 15px;
   color: #03e9f4;
   text-decoration: none;
   text-transform: uppercase;
   transition: 0.5s;
   letter-spacing: 2px;
   overflow: hidden;
-  margin-right: 50px;
   font-family: Aquatico;
   border: 2px solid white;
   border-radius: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-a:hover {
+.sound-button .round-button:hover {
   background: #03e9f4;
   color: #050801;
   box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
@@ -186,20 +194,28 @@ a:hover {
   -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
 }
 
-a:nth-child(1) {
+.sound-button.selected .round-button.selected {
+  background: #03e9f4;
+  color: black;
+  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+    0 0 200px #03e9f4;
+  /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.sound-button:nth-child(1) {
   filter: hue-rotate(270deg);
 }
 
-a:nth-child(2) {
+.sound-button:nth-child(2) {
   filter: hue-rotate(110deg);
 }
 
-a span {
+.sound-button span {
   position: absolute;
   display: block;
 }
 
-a span:nth-child(1) {
+.sound-button span:nth-child(1) {
   top: 0;
   left: 0;
   width: 100%;
@@ -219,7 +235,7 @@ a span:nth-child(1) {
   }
 }
 
-a span:nth-child(2) {
+.sound-button span:nth-child(2) {
   top: -100%;
   right: 0;
   width: 2px;
@@ -240,7 +256,7 @@ a span:nth-child(2) {
   }
 }
 
-a span:nth-child(3) {
+.sound-button span:nth-child(3) {
   bottom: 0;
   right: 0;
   width: 100%;
@@ -261,7 +277,7 @@ a span:nth-child(3) {
   }
 }
 
-a span:nth-child(4) {
+.sound-button span:nth-child(4) {
   bottom: -100%;
   left: 0;
   width: 2px;
@@ -282,34 +298,17 @@ a span:nth-child(4) {
   }
 }
 
-.selected-songs a.active {
-  background: #03e9f4;
-  color: #050801;
-  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
-    0 0 200px #03e9f4;
-  /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
-}
 
-.selected-songs {
-  display: flex;
-  justify-content: space-between;
-  /* margin: 20px 0; Adjust spacing as needed */
-}
 
 /* ---------------------------------------------------- */
 
-.sound-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .round-button {
   border-radius: 10%;
   width: 100px;
   height: 100px;
   border: none;
-  background-color: transparent; /* Fall theme color - you can choose your desired color */
+  background-color: transparent; 
   color: #ffffff;
   font-size: 16px;
   cursor: pointer;
@@ -319,12 +318,11 @@ a span:nth-child(4) {
   border: 2px solid white;
 }
 
-.round-button:hover {
-  background-color: #fefefe37; /* Darker shade for hover effect */
-}
+/* .round-button:hover {
+  background-color: #fefefe37; 
+} */
 
 .toggle-soundboard {
-  padding: 0px 0px;  /* Adjust as needed */
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease; /* Optional: adds a smooth color transition */
@@ -345,7 +343,6 @@ a span:nth-child(4) {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 
@@ -996,7 +993,8 @@ button[data-setter]:hover {
 }
 
 .hidden {
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
   opacity: 0;
 }
 
