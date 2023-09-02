@@ -9,21 +9,44 @@ const MasterControls = ({
   next,
   mainSongPlaying,
   setMainSongPlaying,
+  selectedSound,
+  playingSounds,
+  setPlayingSounds
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-  const pauseSong = () => {
-    console.log(audios);
-    Array.from(audios).forEach((audio) => audio.pause());
-    setMainSongPlaying(false);
-  };
+
+
   const playSong = () => {
-    audios[0].play();
+    // Only play the selected audio
+    const audioElement = document.querySelector(`audio[src="${selectedSound}"]`);
+    if (audioElement) {
+        audioElement.play();
+    }
     setMainSongPlaying(true);
-  };
+
+    // Update the playingSounds array
+    if (!playingSounds.includes(selectedSound)) {
+        setPlayingSounds([...playingSounds, selectedSound]);
+    }
+};
+
+
+
+const pauseSong = () => {
+  const allAudioElements = document.getElementsByTagName("audio");
+  for (let i = 0; i < allAudioElements.length; i++) {
+      allAudioElements[i].pause();
+  }
+  setMainSongPlaying(false);
+};
+
+
+
+
   useEffect(() => {
     // Pause music when focus timer ends
     const handleFocusEnd = () => {
