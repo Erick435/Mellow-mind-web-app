@@ -101,7 +101,7 @@ const pauseSong = () => {
           onClick={toggleCollapse}
           className="toggle-controls-btn p-2 bg-white rounded-t-md bg-opacity-50 text-sm"
         >
-          {isCollapsed ? <div>Show Controls</div> : <div>Hide</div>}
+          {isCollapsed ? <div className="ml-3 mr-3 text-xl">▲</div> : <div className="ml-3 mr-3 text-xl">▼</div>}
         </button>
       </div>
     </>
