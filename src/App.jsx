@@ -5,6 +5,8 @@ import { auth } from './components/googleSignin/config'
 import { signOut } from '@firebase/auth';
 import './App.css';
 import TodoList from './components/todolist';
+import Footer from './components/footer';
+
 
 
 function App() {
@@ -151,6 +153,7 @@ function App() {
           )}
         </div>
       </div>
+      <Footer formLink="https://docs.google.com/forms/d/e/1FAIpQLSeIYT5s7ct0A3Zyhfs4RQTXnhG0qF-AfqMrrnSfqw3i4gpRYQ/viewform?usp=sf_link" />
     </>
   );
 }
