@@ -13,7 +13,7 @@ function App() {
   //setting up login/registration (firebase)
   const [user, setUsers] = useState(null);
   const [isSidebarVisible, setSidebarVisibility] = React.useState(true);
-  const [selectedVideo, setSelectedVideo] = React.useState("/path/to/default/video.mp4");  // default video path
+  const [selectedVideo, setSelectedVideo] = React.useState("/nightsky.mp4");  // default video path
   const [selectedTask, setSelectedTask] = useState(null);
   const [isFocusVisible, setFocusVisibility] = useState(false);
 

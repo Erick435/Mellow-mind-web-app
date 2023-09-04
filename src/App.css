@@ -1015,3 +1015,22 @@ button[data-setter]:hover {
   font-size: 36px; /* Adjust the size as needed */
   color: white;
 }
+
+
+.footer {
+  border: 1px solid white; /* A light grey border */
+  padding: 10px;
+  text-align: center;
+  margin: 20px 0;  /* This gives some spacing above and below the footer */
+  color: #fff;  /* Set text color to white */
+}
+
+.footer a {
+  color: inherit; /* To make sure link inherits parent color */
+  text-decoration: none; /* To remove underlining from the link */
+  transition: color 0.3s; /* Smooth color transition on hover */
+}
+
+.footer a:hover {
+  color: white; /* A darker grey for hover effect */
+}
