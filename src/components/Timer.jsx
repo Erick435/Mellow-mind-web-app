@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import "font-awesome/css/font-awesome.min.css";
 
 
-const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundboard }) => {
+const Timer = ({ onPause, onResume, onFocusEnd, onBreakEnd, focusTime = 25, breakTime = 5, showSoundboard }) => {
     const focusTimeInSeconds = focusTime * 60;
     const [wholeTime, setWholeTime] = useState(focusTimeInSeconds);
     const [timeLeft, setTimeLeft] = useState(focusTimeInSeconds);
     const [isPaused, setIsPaused] = useState(true);
     const [isStarted, setIsStarted] = useState(false);
-    const [timerType, setTimerType] = useState("main"); // 'main' for main timer, 'additional' for 20% timer
     const [isMainTimer, setIsMainTimer] = useState(true); // true for main, false for additional
 
     const intervalRef = useRef(null);
@@ -26,7 +25,7 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundb
 
     useEffect(() => {
         if (!isStarted) return;
-
+        
         if (isPaused) {
             clearInterval(intervalRef.current);
         } else {
@@ -34,18 +33,27 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundb
                 setTimeLeft((prevTime) => {
                     if (prevTime <= 1) {
                         clearInterval(intervalRef.current);
-
+        
                         if (isMainTimer) {
-                            setIsMainTimer(false);
-                            onRestStart();
-                            resetTimer(false); // Set up for the rest timer
-                            setIsStarted(true); // Restart the timer
-                            return breakTime * 60; // Use the breakTime prop for rest
+                            onFocusEnd && onFocusEnd();
+                            
+                            // Emit a custom event to pause the music
+                            // window.dispatchEvent(new Event('pauseMusic'));
+                            window.dispatchEvent(new CustomEvent('onFocusEnd'));
+    
+                            resetTimer(false);
+                            setIsStarted(true);
+                            return breakTime * 60;
                         } else {
-                            setIsMainTimer(true);
-                            resetTimer(true); // Set up for the main timer
-                            setIsStarted(true); // Restart the timer
-                            return focusTimeInSeconds; // Use the focusTimeInSeconds for main
+                            onBreakEnd && onBreakEnd();
+    
+                            // Emit a custom event to play the music
+                            // window.dispatchEvent(new Event('playMusic'));
+                            window.dispatchEvent(new CustomEvent('onBreakEnd'));
+    
+                            resetTimer(true);
+                            setIsStarted(true);
+                            return focusTimeInSeconds;
                         }
                     }
                     return prevTime - 1;
@@ -54,31 +62,24 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundb
         }
         return () => clearInterval(intervalRef.current);
     }, [
-        isPaused, isStarted, wholeTime, isMainTimer, onRestStart, breakTime, focusTimeInSeconds]);
+        isPaused, isStarted, wholeTime, isMainTimer, breakTime, focusTimeInSeconds, onFocusEnd, onBreakEnd
+    ]);
+    
     useEffect(() => {
         resetTimer();
     }, [focusTime, breakTime]);
 
     const togglePause = () => {
-        // console.log("Toggling pause", { isStarted, isPaused });
-        if (timerType === "additional" && isPaused && !isStarted) {
-            setTimerType("main");
-            setTimeLeft(wholeTime);
-        } else if (!isStarted) {
-            setIsStarted(true);
-            setIsPaused(false);
-        } else {
-            setIsPaused((prevPauseState) => {
-                if (!prevPauseState) {
-                    onPause(); // Call the onPause callback when pausing the timer
-                } else {
-                    // onResume(); // Call the onResume callback when resuming the timer
-                }
-                return !prevPauseState;
-            });
-        }
-    };
+    if (!isStarted) {
+        setIsStarted(true);
+        setIsPaused(false);
+    } else {
+        setIsPaused(prevPauseState => !prevPauseState);
+    }
+};
 
+    
+    
 
     useEffect(() => {
         const length = Math.PI * 2 * 100;
@@ -105,7 +106,7 @@ const Timer = ({ onPause, onRestStart, focusTime = 25, breakTime = 5, showSoundb
             </div>
             <div className="circle">
                 <svg
-                    width="300"
+                    width="500"
                     viewBox="0 0 220 220"
                     xmlns="http://www.w3.org/2000/svg"
                 >
